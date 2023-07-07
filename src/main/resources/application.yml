@@ -1,5 +1,4 @@
 spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+  config:
+    import:
+      - classpath:settings/settings.yml
