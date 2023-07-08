@@ -22,7 +22,7 @@ public class CustomUserDetails implements OAuth2User, UserDetails, Serializable 
             Member member,
             Map<String, Object> attributes,
             Collection<? extends GrantedAuthority> authorities) {
-
+        //이 생성자는 소셜 로그인 할때 씀
         this.member = member;
         this.attributes = attributes;
         this.authorities = authorities;
@@ -30,7 +30,7 @@ public class CustomUserDetails implements OAuth2User, UserDetails, Serializable 
 
     public CustomUserDetails(
             Member member) {
-
+        //이 생성자는 일반 로그인 할때 씀
         this.member = member;
     }
 
