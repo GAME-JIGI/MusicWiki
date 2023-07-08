@@ -31,7 +31,7 @@ public class MemberEntity extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false, length = 20)
-    private String user_id;
+    private String userId;
 
     @Column(nullable = false)
     private String pw;
@@ -49,7 +49,7 @@ public class MemberEntity extends BaseTimeEntity {
     private LocalDateTime birth;
 
     @Column(nullable = false)
-    private Boolean is_su;
+    private Boolean isSu;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -68,14 +68,14 @@ public class MemberEntity extends BaseTimeEntity {
     private List<LikeEntity> likeList;
 
     @Builder
-    public MemberEntity(String user_id, String pw, String phone, String email, String name, LocalDateTime birth, Boolean is_su, Role role) {
-        this.user_id = user_id;
+    public MemberEntity(String userId, String pw, String phone, String email, String name, LocalDateTime birth, Boolean isSu, Role role) {
+        this.userId = userId;
         this.pw = pw;
         this.phone = phone;
         this.email = email;
         this.name = name;
         this.birth = birth;
-        this.is_su = is_su;
+        this.isSu = isSu;
         this.role = role;
     }
 

@@ -25,13 +25,13 @@ public class Member {
 
     public Member(MemberEntity memberEntity) {
         id = memberEntity.getId();
-        user_id = memberEntity.getUser_id();
+        user_id = memberEntity.getUserId();
         pw = memberEntity.getPw();
         phone = memberEntity.getPhone();
         email = memberEntity.getEmail();
         name = memberEntity.getName();
         birth = memberEntity.getBirth();
-        is_su = memberEntity.getIs_su();
+        is_su = memberEntity.getIsSu();
         role = memberEntity.getRole();
     }
 }
