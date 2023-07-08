@@ -25,7 +25,7 @@ public class CustomUserService implements UserDetailsService {
         //Username(= 계정 id) 로 계정 정보를 찾아서 반환한다
         //Username 에 해당하는 계정 정보가 없다면 예외반환
 
-        return memberRepository.findByUser_id(username)
+        return memberRepository.findByUserId(username)
                 .map(Member::new)
                 .map(CustomUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Username Not Found (Username = " + username + ")"));
