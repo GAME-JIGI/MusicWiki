@@ -43,7 +43,7 @@ public class PostEntity extends BaseTimeEntity {
     @JoinColumn(name = "writer_id")
     private MemberEntity writer;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "post")
     private List<LikeEntity> likeList;
 
     @Builder
