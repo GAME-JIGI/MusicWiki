@@ -1,0 +1,12 @@
+spring.jpa:
+  show-sql: true #true 면 => DB에 날리는 쿼리들을 로그에 보여줌
+  hibernate.ddl-auto: none
+  #none 을 create 로 고치면 => entity 들을 기준으로 테이블을 새로 만듬. (데이터 날아감 주의) (테이블이 수정되었을때 유용함)
+
+#주석 해제하면 세션을 DB에 저장함
+#서버 재시작 되어도 로그인 상태 유지하려면 필요
+
+spring.session:
+  store-type: jdbc
+  jdbc.table-name: SPRING_SESSION
+#  jdbc.initialize-schema: always
