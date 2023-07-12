@@ -1,6 +1,0 @@
-spring:
-  config:
-    import:
-      - db.yml
-      - jsp.yml
-      - port.yml
