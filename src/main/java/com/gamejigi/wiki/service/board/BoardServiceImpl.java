@@ -1,13 +1,19 @@
 package com.gamejigi.wiki.service.board;
 
 import com.gamejigi.wiki.domain.board.Board;
+import com.gamejigi.wiki.domain.member.role.Role;
 import com.gamejigi.wiki.entity.board.BoardEntity;
+import com.gamejigi.wiki.entity.category.CategoryEntity;
+import com.gamejigi.wiki.entity.member.MemberEntity;
 import com.gamejigi.wiki.repository.board.BoardRepository;
+import com.gamejigi.wiki.repository.category.CategoryRepository;
+import com.gamejigi.wiki.repository.member.MemberRepository;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,18 +21,73 @@ import org.springframework.stereotype.Service;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    private final CategoryRepository categoryRepository;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public PaginationResponse<Board> getBoardList(PaginationRequest request) {
         String searchStr = "%" + request.getSearch() + "%";
         Pageable pageable = request.getPageable();
 
-        Page<BoardEntity> result = boardRepository.findPageByName(searchStr, pageable);
+        Page<BoardEntity> result;
+        if (searchStr.compareTo("%%") == 0) {
+            result = boardRepository.findAll(pageable);
+        }
+        else {
+            result = boardRepository.findPageByName(searchStr, pageable);
+        }
 
         return PaginationResponse.<Board>builder()
                 .request(request)
-                .columnList(result.stream().map(Board::new).toList())
+                .columnList(result.stream()
+                        .map(Board::new)
+                        .toList())
                 .pageCount(result.getTotalPages())
                 .build();
+    }
+
+    @Override
+    public void createTestcase() {
+        //관리자 계정 찾기
+        MemberEntity su = memberRepository.findByUserId("admin")
+                .orElseGet(() -> {
+                    //관리자 계정 없으면 만들기
+                    MemberEntity member = MemberEntity.builder()
+                            .name("admin")
+                            .email("email")
+                            .role(Role.ADMIN)
+                            .isSu(true)
+                            .userId("admin")
+                            .pw(passwordEncoder.encode("admin"))
+                            .build();
+                    return memberRepository.save(member);
+                });
+
+        //category1 만들기
+        CategoryEntity category1 = categoryRepository.findByName("category1")
+                .orElseGet(() -> {
+                    //category1 없으면 만들기
+                    CategoryEntity category = CategoryEntity.builder()
+                            .su(su)
+                            .name("category1")
+                            .build();
+                    return categoryRepository.save(category);
+                });
+
+        //게시판 100개 생성
+        for (int i = 0; i < 100; i++) {
+            BoardEntity board = BoardEntity.builder()
+                    .category(category1)
+                    .su(su)
+                    .name("board"+i)
+                    .build();
+            boardRepository.save(board);
+        }
+    }
+
+    @Override
+    public void deleteTestcase() {
+        boardRepository.deleteAll();
     }
 }

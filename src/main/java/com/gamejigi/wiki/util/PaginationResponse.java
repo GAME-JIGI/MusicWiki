@@ -17,7 +17,9 @@ public class PaginationResponse<Domain> {
 
     //아래는 setPageCount 메소드가 자동으로 채워줌
     private List<Integer> pageList = new ArrayList<>();
+    private boolean nextButton;
     private int nextPage;
+    private boolean prevButton;
     private int prevPage;
 
     @Builder
@@ -34,7 +36,9 @@ public class PaginationResponse<Domain> {
             pageList.add(i);
         }
         prevPage = Math.max(0, start-1);
+        prevButton = start-1 >= 0;
         nextPage = Math.min(pageCount, end+1);
+        nextButton = end+1 <= pageCount;
     }
 
 }

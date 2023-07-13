@@ -1,3 +1,4 @@
+<%@ page import="com.gamejigi.wiki.util.PaginationResponse" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -25,6 +26,7 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="/util/util.js"></script>
 
 </head>
 
@@ -52,9 +54,14 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <a href="/admin/board/test">
+                        <a tabindex="0" onclick="fetchRedirect('/admin/board/test', 'post', '/admin/board')">
                             <button type="button" class="btn btn-primary">
-                                테스트 게시판 생성하기
+                                테스트 데이터 생성하기
+                            </button>
+                        </a>
+                        <a tabindex="0" onclick="fetchRedirect('/admin/board/test', 'delete', '/admin/board')">
+                            <button type="button" class="btn btn-primary">
+                                전체삭제하기
                             </button>
                         </a>
                     </div>
@@ -145,16 +152,29 @@
                                     </div>
                                     <div class="col-sm-12 col-md-7">
                                         <div class="dataTables_paginate paging_simple_numbers">
-                                            <ul class="pagination">
-                                                <li class="paginate_button page-item previous disabled">
-                                                    <a href="#" tabindex="0" class="page-link">Previous</a></li>
-                                                <li class="paginate_button page-item active"><a href="#"
-                                                                                                tabindex="0"
-                                                                                                class="page-link">1</a>
-                                                </li>
-                                                <li class="paginate_button page-item next disabled">
-                                                    <a href="#" tabindex="0"
-                                                       class="page-link">Next</a></li>
+                                            <ul class="pagination" style="justify-content: center">
+                                                <c:if test="${pagination.prevButton}">
+                                                    <li class="paginate_button page-item previous">
+                                                        <a onclick="movePage('/admin/board', ${pagination.prevPage}, '');" tabindex="0" class="page-link">
+                                                            이전
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                                <c:forEach var="page" items="${pagination.pageList}">
+                                                    <c:set var="active" value="${pagination.request.page == page ? 'active' : ''}" />
+                                                    <li class="paginate_button page-item ${active}">
+                                                        <a onclick="movePage('/admin/board', ${page}, '');" tabindex="0" class="page-link">
+                                                            ${page + 1}
+                                                        </a>
+                                                    </li>
+                                                </c:forEach>
+                                                <c:if test="${pagination.nextButton}">
+                                                    <li class="paginate_button page-item next">
+                                                        <a onclick="movePage('/admin/board', ${pagination.nextPage}, '');" tabindex="0" class="page-link">
+                                                            다음
+                                                        </a>
+                                                    </li>
+                                                </c:if>
                                             </ul>
                                         </div>
                                     </div>

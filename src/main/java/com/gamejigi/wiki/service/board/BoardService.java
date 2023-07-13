@@ -8,4 +8,6 @@ public interface BoardService {
 
     PaginationResponse<Board> getBoardList(PaginationRequest request);
 
+    void createTestcase();
+    void deleteTestcase();
 }
