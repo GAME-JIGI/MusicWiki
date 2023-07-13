@@ -22,6 +22,8 @@ public class Member {
     LocalDateTime birth;
     Boolean is_su;
     Role role;
+    LocalDateTime createdDate;
+    LocalDateTime modifiedDate;
 
     public Member(MemberEntity memberEntity) {
         id = memberEntity.getId();
@@ -33,5 +35,7 @@ public class Member {
         birth = memberEntity.getBirth();
         is_su = memberEntity.getIsSu();
         role = memberEntity.getRole();
+        createdDate = memberEntity.getCreatedDate();
+        modifiedDate = memberEntity.getModifiedDate();
     }
 }
