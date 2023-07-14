@@ -1,6 +1,7 @@
 <%@ page import="com.gamejigi.wiki.util.PaginationResponse" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="pagination" scope="request" type="com.gamejigi.wiki.util.PaginationResponse<com.gamejigi.wiki.domain.board.Board>"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -155,7 +156,8 @@
                                             <ul class="pagination" style="justify-content: center">
                                                 <c:if test="${pagination.prevButton}">
                                                     <li class="paginate_button page-item previous">
-                                                        <a onclick="movePage('/admin/board', ${pagination.prevPage}, '');" tabindex="0" class="page-link">
+                                                        <a onclick="movePage('/admin/board', ${pagination.prevPage}, '');"
+                                                           tabindex="0" class="page-link">
                                                             이전
                                                         </a>
                                                     </li>
@@ -170,7 +172,8 @@
                                                 </c:forEach>
                                                 <c:if test="${pagination.nextButton}">
                                                     <li class="paginate_button page-item next">
-                                                        <a onclick="movePage('/admin/board', ${pagination.nextPage}, '');" tabindex="0" class="page-link">
+                                                        <a onclick="movePage('/admin/board', ${pagination.nextPage}, '');"
+                                                           tabindex="0" class="page-link">
                                                             다음
                                                         </a>
                                                     </li>
