@@ -13,19 +13,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>게시판 관리</title>
 
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="/util/util.js"></script>
 
 </head>
@@ -35,7 +35,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <%@ include file="includes/sidebar.jsp" %>
+    <%@ include file="../includes/sidebar.jsp" %>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -43,7 +43,7 @@
         <!-- Main Content -->
         <div id="content">
 
-            <%@ include file="includes/header.jsp" %>
+            <%@ include file="../includes/header.jsp" %>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -62,6 +62,11 @@
                         <a tabindex="0" onclick="fetchRedirect('/admin/board/test', 'delete', '/admin/board')">
                             <button type="button" class="btn btn-primary">
                                 전체삭제하기
+                            </button>
+                        </a>
+                        <a tabindex="0" href="/admin/board/create">
+                            <button type="button" class="btn btn-primary">
+                                생성
                             </button>
                         </a>
                     </div>
@@ -105,6 +110,8 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0">수정 일시
                                                 </th>
+                                                <th>상세 보기
+                                                </th>
                                             </tr>
                                             </thead>
                                             <tfoot>
@@ -115,6 +122,7 @@
                                                 <th rowspan="1" colspan="1">작업자 이름</th>
                                                 <th rowspan="1" colspan="1">생성 일시</th>
                                                 <th rowspan="1" colspan="1">수정 일시</th>
+                                                <th rowspan="1" colspan="1">상세 보기</th>
                                             </tr>
                                             </tfoot>
                                             <tbody>
@@ -138,6 +146,13 @@
                                                 </td>
                                                 <td>
                                                         ${row.modifiedDate}
+                                                </td>
+                                                <td>
+                                                    <a tabindex="0" href="/admin/board/detail?id=${row.id}">
+                                                        <button type="button" class="btn btn-primary">
+                                                            상세 보기
+                                                        </button>
+                                                    </a>
                                                 </td>
                                             </tr>
                                             </c:forEach>
@@ -232,14 +247,14 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/admin/vendor/jquery/jquery.min.js"></script>
+<script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
+<script src="/admin/js/sb-admin-2.min.js"></script>
 
 </body>
 

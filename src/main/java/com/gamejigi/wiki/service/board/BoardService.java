@@ -10,4 +10,8 @@ public interface BoardService {
 
     void createTestcase();
     void deleteTestcase();
+
+    Board getBoardById(long id);
+
+    void createBoard(String name, long categoryId, long suId);
 }

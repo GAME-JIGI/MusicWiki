@@ -90,4 +90,32 @@ public class BoardServiceImpl implements BoardService {
     public void deleteTestcase() {
         boardRepository.deleteAll();
     }
+
+    @Override
+    public Board getBoardById(long id) {
+        return boardRepository.findById(id)
+                .map(Board::new)
+                .orElse(null);
+    }
+
+    @Override
+    public void createBoard(String name, long categoryId, long suId) {
+
+        MemberEntity su = memberRepository
+                .findById(suId)
+                .orElse(null);
+
+        CategoryEntity category = categoryRepository
+                .findById(categoryId)
+                .orElse(null);
+
+        BoardEntity board = BoardEntity
+                .builder()
+                .su(su)
+                .name(name)
+                .category(category)
+                .build();
+
+        boardRepository.save(board);
+    }
 }
