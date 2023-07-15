@@ -16,50 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class AdminController {
 
-    public final BoardService boardService;
-
     @GetMapping(value = {"", "/"})
     public String mainPage() {
         return "admin/main";
-    }
-
-    @GetMapping("/board")
-    public String boardList(
-            Model model,
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required = false, defaultValue = "", name = "type") String searchType,
-            @RequestParam(required = false, defaultValue = "0") int sort,
-            @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn
-    ) {
-
-        var request = PaginationRequest.builder()
-                .page(page)
-                .search(search)
-                .searchType(searchType)
-                .sort(sort)
-                .sortColumn(sortColumn)
-                .build();
-        var pagination = boardService.getBoardList(request);
-
-        model.addAttribute("pagination", pagination);
-        return "admin/board";
-    }
-
-    @PostMapping("/board/test")
-    public String boardTestCreate() {
-
-        boardService.createTestcase();
-
-        return "redirect:/admin/board";
-    }
-
-    @DeleteMapping("/board/test")
-    public String boardTestDelete() {
-
-        boardService.deleteTestcase();
-
-        return "redirect:/admin/board";
     }
 
 }
