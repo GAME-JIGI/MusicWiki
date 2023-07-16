@@ -118,4 +118,25 @@ public class BoardServiceImpl implements BoardService {
 
         boardRepository.save(board);
     }
+
+    @Override
+    public void delete(long id) {
+        boardRepository.deleteById(id);
+    }
+
+    @Override
+    public void patch(long id, long suId, String name, long categoryId) {
+        BoardEntity oldBoard = boardRepository.findById(id).orElse(null);
+        CategoryEntity newCategory = categoryRepository.findById(categoryId).orElse(null);
+        MemberEntity newSu = memberRepository.findById(suId).orElse(null);
+
+        BoardEntity newBoard = BoardEntity.builder()
+                .id(id)
+                .name(name)
+                .category(newCategory)
+                .su(newSu)
+                .build();
+
+        boardRepository.save(newBoard);
+    }
 }

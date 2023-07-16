@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="board" scope="request" type="com.gamejigi.wiki.domain.board.Board"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +61,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 번호</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">번호</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${board.id}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-key fa-2x text-gray-300"></i>
@@ -78,7 +79,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 게시판 이름</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">게시판 이름</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${board.name}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -96,7 +97,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 카테고리 이름</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">카테고리 이름</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${board.category.name}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -114,7 +115,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">관리자
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">관리자</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${board.su.name}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-user-circle fa-2x text-gray-300"></i>
@@ -132,7 +133,8 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 생성/수정일시</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">생성/수정일시</div>
+                                            <div class="h6 mb-0 font-weight-bold text-gray-800">생성일시 : ${board.createdDate}</div>
+                                            <div class="h6 mb-0 font-weight-bold text-gray-800">수정일시 : ${board.modifiedDate}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>

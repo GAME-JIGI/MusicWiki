@@ -14,4 +14,8 @@ public interface BoardService {
     Board getBoardById(long id);
 
     void createBoard(String name, long categoryId, long suId);
+
+    void delete(long id);
+
+    void patch(long id, long suId, String name, long categoryId);
 }
