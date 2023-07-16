@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -110,12 +111,43 @@ public class BoardController {
         return "";
     }
 
+    @DeleteMapping("")
+    @ResponseBody
+    public String boardCreate(
+            @RequestParam long id
+    ) {
+        boardService.delete(id);
+
+        return "";
+    }
+
     @GetMapping("/update")
     public String boardUpdate(
             Model model,
             @RequestParam int id
     ) {
+        var board = boardService.getBoardById(id);
+        model.addAttribute("board", board);
+
+        var categories = categoryService.getCategoryList();
+        model.addAttribute("categories", categories);
+
         return "admin/board/update";
+    }
+
+    @PatchMapping("")
+    @ResponseBody
+    public String boardPatch(
+            @RequestParam long id,
+            @RequestParam String name,
+            @RequestParam(name = "category") long categoryId
+    ) {
+        //추후에 계정ID를 세션에서 가져오는 코드 필요
+        long suId = memberService.getByName("admin").getId();
+
+        boardService.patch(id, suId, name, categoryId);
+
+        return "";
     }
 
 }
