@@ -44,6 +44,7 @@ public class BoardServiceImpl implements BoardService {
                         .map(Board::new)
                         .toList())
                 .pageCount(result.getTotalPages())
+                .rowsCount(result.getTotalElements())
                 .build();
     }
 
