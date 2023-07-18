@@ -38,15 +38,18 @@ public class BoardController {
     @GetMapping("")
     public String boardList(
             Model model,
+            HttpServletRequest httpServletRequest,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "") String search,
             @RequestParam(required = false, defaultValue = "", name = "type") String searchType,
             @RequestParam(required = false, defaultValue = "0") int sort,
-            @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn
+            @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn,
+            @RequestParam(required = false, defaultValue = "10") int size
     ) {
 
         var request = PaginationRequest.builder()
                 .page(page)
+                .maxSize(size)
                 .search(search)
                 .searchType(searchType)
                 .sort(sort)
@@ -55,6 +58,12 @@ public class BoardController {
         var pagination = boardService.getBoardList(request);
 
         model.addAttribute("pagination", pagination);
+
+        String parameter = httpServletRequest.getQueryString();
+        parameter = parameter == null ? "" : parameter;
+
+        model.addAttribute("parameter", parameter);
+
         return "admin/board/list";
     }
 
