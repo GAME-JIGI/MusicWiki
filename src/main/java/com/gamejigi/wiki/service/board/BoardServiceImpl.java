@@ -35,7 +35,7 @@ public class BoardServiceImpl implements BoardService {
             result = boardRepository.findAll(pageable);
         }
         else {
-            result = boardRepository.findPageByName(searchStr, pageable);
+            result = boardRepository.findPageByNameLike(searchStr, pageable);
         }
 
         return PaginationResponse.<Board>builder()

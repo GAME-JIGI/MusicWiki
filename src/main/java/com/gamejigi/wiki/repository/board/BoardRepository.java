@@ -13,7 +13,7 @@ import org.springframework.lang.NonNullApi;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 
-    Page<BoardEntity> findPageByName(String name, Pageable pageable);
+    Page<BoardEntity> findPageByNameLike(String name, Pageable pageable);
 
     Page<BoardEntity> findAll(Pageable pageable);
 }
