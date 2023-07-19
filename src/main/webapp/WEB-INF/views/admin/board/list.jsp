@@ -95,7 +95,9 @@
                                         <div class="dataTables_filter">
                                             <label>
                                                 게시판 이름 검색 :
-                                                <input type="search" id="board_search" class="form-control form-control-sm" placeholder="">
+                                                <input type="search" id="board_search" class="form-control form-control-sm" placeholder=""
+                                                       value="${param['search']}"
+                                                       onchange="moveParam('/admin/board', editParam('${parameter}', 'search', getValue('board_search')))">
                                             </label>
                                         </div>
                                     </div>
