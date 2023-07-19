@@ -47,27 +47,33 @@ function moveParam(url, param) {
   location.href = url + "?" + param;
 }
 
-//쿼리 파라미터를 수정하기
+//쿼리 파라미터를 수정하기 //value 가 빈 문자열이면 삭제함
 function editParam(param, key, value) {
   param += "";
   key += "";
   value += "";
 
+  const isValueEmpty = value === "";
+  const pair = isValueEmpty ? "" : `${key}=${value}`;
+  const ampersand = isValueEmpty ? "" : "&";
+
   const isEmpty = param.indexOf('=') === -1;
   if (isEmpty) {
-    return `${key}=${value}`;
+    return pair;
   }
 
   const oldStartIndex = param.indexOf(key + '=');
   const isNew = oldStartIndex === -1;
   if (isNew) {
-    return `${param}&${key}=${value}`;
+    return `${param}${ampersand}${pair}`;
   }
 
-  const oldLastIndex = oldStartIndex + key.length + value.length;
+  let oldLastIndex = param.slice(oldStartIndex).indexOf('&');
+  oldLastIndex = oldLastIndex === -1 ? param.length - 1 : oldLastIndex - 1;
+
   const oldLeftStr = param.slice(0, Math.max(0, oldStartIndex - 1));
   const oldRightStr = param.slice(oldLastIndex + 1);
-  return `${oldLeftStr}${oldRightStr}&${key}=${value}`;
+  return `${oldLeftStr}${oldRightStr}${ampersand}${pair}`;
 }
 
 //목록 정렬 관련 쿼리 파라미터를 수정하기
