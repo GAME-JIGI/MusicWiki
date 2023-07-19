@@ -33,14 +33,14 @@ public class PaginationResponse<Domain> {
 
     public void setPageCount(int pageCount) {
         int start = Math.max(0, request.getPage() - request.getMaxPage());
-        int end = Math.min(pageCount, request.getPage() + request.getMaxPage());
+        int end = Math.min(pageCount - 1, request.getPage() + request.getMaxPage());
         for (int i = start; i <= end; i++) {
             pageList.add(i);
         }
         prevPage = Math.max(0, start-1);
         prevButton = start-1 >= 0;
-        nextPage = Math.min(pageCount, end+1);
-        nextButton = end+1 <= pageCount;
+        nextPage = Math.min(pageCount-1, end+1);
+        nextButton = end+1 <= pageCount-1;
     }
 
 }
