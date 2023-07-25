@@ -1,42 +1,26 @@
-package com.gamejigi.wiki.web.admin;
+package com.gamejigi.wiki.web.member;
 
-
-import com.gamejigi.wiki.domain.board.Board;
-import com.gamejigi.wiki.domain.category.Category;
-import com.gamejigi.wiki.domain.member.Member;
-import com.gamejigi.wiki.repository.member.MemberRepository;
 import com.gamejigi.wiki.service.board.BoardService;
 import com.gamejigi.wiki.service.category.CategoryService;
-import com.gamejigi.wiki.service.member.MemberService;
 import com.gamejigi.wiki.util.PaginationRequest;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpStatusCodeException;
+import com.gamejigi.wiki.service.member.MemberService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("admin/board")
+@RequestMapping("admin/member")
 @RequiredArgsConstructor
-public class BoardController {
+public class MemberController {
 
     public final BoardService boardService;
     public final CategoryService categoryService;
     public final MemberService memberService;
 
     @GetMapping("")
-    public String boardList(
+    public String memberList(
             Model model,
             HttpServletRequest httpServletRequest,
             @RequestParam(required = false, defaultValue = "0") int page,
@@ -46,7 +30,6 @@ public class BoardController {
             @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn,
             @RequestParam(required = false, defaultValue = "10") int size
     ) {
-
         var request = PaginationRequest.builder()
                 .page(page)
                 .maxSize(size)
@@ -64,58 +47,48 @@ public class BoardController {
 
         model.addAttribute("parameter", parameter);
 
-        return "admin/board/list";
+        return "admin/member/list";
     }
 
     @PostMapping("/test")
     @ResponseBody
-    public String boardTestCreate() {
+    public String memberTestCreate() {
 
-        boardService.createTestcase();
+        memberService.createTestcase();
 
         return "";
     }
 
     @DeleteMapping("/test")
     @ResponseBody
-    public String boardTestDelete() {
+    public String memberTestDelete() {
 
-        boardService.deleteTestcase();
+        memberService.deleteTestcase();
 
         return "";
     }
 
     @GetMapping("/detail")
-    public String boardDetail(
+    public String memberDetail(
             Model model,
-            @RequestParam long id
+            @RequestParam String name
     ) {
-        var board = boardService.getBoardById(id);
-        model.addAttribute("board", board);
+        var member = memberService.getByName(name);
+        model.addAttribute("member", member);
 
-        return "admin/board/detail";
+        return "admin/member/detail";
     }
 
     @GetMapping("/create")
-    public String boardCreate(
-            Model model
-    ) {
-        var categories = categoryService.getCategoryList();
-        model.addAttribute("categories", categories);
-
-        return "admin/board/create";
-    }
-
-    @PostMapping("")
     @ResponseBody
-    public String boardCreate(
+    public String memberCreate(
             @RequestParam String name,
-            @RequestParam(name = "category") long categoryId
+            @RequestParam(name = "member") long memberId
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        boardService.createBoard(name, categoryId, suId);
+        //memberService.createMember(memberId,);
 
         return "";
     }
@@ -141,7 +114,7 @@ public class BoardController {
         var categories = categoryService.getCategoryList();
         model.addAttribute("categories", categories);
 
-        return "admin/board/update";
+        return "admin/member/update";
     }
 
     @PatchMapping("")

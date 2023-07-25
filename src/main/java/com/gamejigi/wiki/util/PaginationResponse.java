@@ -12,8 +12,9 @@ public class PaginationResponse<Domain> {
 
     //서비스가 컨트롤러에 넘기기 전에 값을 채워야 하는 부분
     private PaginationRequest request;
-    private int pageCount;
     private List<Domain> columnList;
+    private int pageCount;
+    private long rowsCount;
 
     //아래는 setPageCount 메소드가 자동으로 채워줌
     private List<Integer> pageList = new ArrayList<>();
@@ -23,22 +24,23 @@ public class PaginationResponse<Domain> {
     private int prevPage;
 
     @Builder
-    public PaginationResponse(PaginationRequest request, int pageCount, List<Domain> columnList) {
+    public PaginationResponse(PaginationRequest request, int pageCount, long rowsCount, List<Domain> columnList) {
         this.request = request;
         setPageCount(pageCount);
+        this.rowsCount = rowsCount;
         this.columnList = columnList;
     }
 
     public void setPageCount(int pageCount) {
         int start = Math.max(0, request.getPage() - request.getMaxPage());
-        int end = Math.min(pageCount, request.getPage() + request.getMaxPage());
+        int end = Math.min(pageCount - 1, request.getPage() + request.getMaxPage());
         for (int i = start; i <= end; i++) {
             pageList.add(i);
         }
         prevPage = Math.max(0, start-1);
         prevButton = start-1 >= 0;
-        nextPage = Math.min(pageCount, end+1);
-        nextButton = end+1 <= pageCount;
+        nextPage = Math.min(pageCount-1, end+1);
+        nextButton = end+1 <= pageCount-1;
     }
 
 }

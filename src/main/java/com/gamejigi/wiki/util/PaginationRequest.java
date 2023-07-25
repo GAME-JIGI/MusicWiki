@@ -1,6 +1,5 @@
 package com.gamejigi.wiki.util;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +29,7 @@ public class PaginationRequest {
     private String sortColumn = ""; //ex) createdDate: 생성된 순서로 정렬
     private int page; //페이지는 0번부터 시작하는 걸로. 프론트에서 알아서 바꿔서 보여주기
 
-    public Sort getSort() {
+    public Sort getJPASort() {
         if (sort == 0) {
             return null;
         }
@@ -40,7 +39,7 @@ public class PaginationRequest {
 
     public PageRequest getPageRequest() {
         if (sort != 0)
-            return PageRequest.of(page, maxSize, getSort());
+            return PageRequest.of(page, maxSize, getJPASort());
         return PageRequest.of(page, maxSize);
     }
 

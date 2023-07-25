@@ -22,6 +22,18 @@
             <span>게시판 관리</span></a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/member">
+            <i class="fas fa-fw fa-table"></i>
+            <span>회원 관리</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/member">
+            <i class="fas fa-fw fa-table"></i>
+            <span>카테고리 관리</span></a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 

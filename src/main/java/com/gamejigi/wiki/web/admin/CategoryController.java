@@ -1,20 +1,11 @@
 package com.gamejigi.wiki.web.admin;
 
 
-import com.gamejigi.wiki.domain.board.Board;
-import com.gamejigi.wiki.domain.category.Category;
-import com.gamejigi.wiki.domain.member.Member;
-import com.gamejigi.wiki.repository.member.MemberRepository;
-import com.gamejigi.wiki.service.board.BoardService;
 import com.gamejigi.wiki.service.category.CategoryService;
 import com.gamejigi.wiki.service.member.MemberService;
 import com.gamejigi.wiki.util.PaginationRequest;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,19 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @Controller
-@RequestMapping("admin/board")
+@RequestMapping("admin/category")
 @RequiredArgsConstructor
-public class BoardController {
+public class CategoryController {
 
-    public final BoardService boardService;
     public final CategoryService categoryService;
     public final MemberService memberService;
 
     @GetMapping("")
-    public String boardList(
+    public String categoryList(
             Model model,
             HttpServletRequest httpServletRequest,
             @RequestParam(required = false, defaultValue = "0") int page,
@@ -55,7 +44,7 @@ public class BoardController {
                 .sort(sort)
                 .sortColumn(sortColumn)
                 .build();
-        var pagination = boardService.getBoardList(request);
+        var pagination = categoryService.getCategoryList(request);
 
         model.addAttribute("pagination", pagination);
 
@@ -64,97 +53,87 @@ public class BoardController {
 
         model.addAttribute("parameter", parameter);
 
-        return "admin/board/list";
+        return "admin/category/list";
     }
 
     @PostMapping("/test")
     @ResponseBody
-    public String boardTestCreate() {
+    public String categoryTestCreate() {
 
-        boardService.createTestcase();
+        categoryService.createTestcase();
 
         return "";
     }
 
     @DeleteMapping("/test")
     @ResponseBody
-    public String boardTestDelete() {
+    public String categoryTestDelete() {
 
-        boardService.deleteTestcase();
+        categoryService.deleteTestcase();
 
         return "";
     }
 
     @GetMapping("/detail")
-    public String boardDetail(
+    public String categoryDetail(
             Model model,
             @RequestParam long id
     ) {
-        var board = boardService.getBoardById(id);
-        model.addAttribute("board", board);
+        var category = categoryService.getById(id);
+        model.addAttribute("category", category);
 
-        return "admin/board/detail";
+        return "admin/category/detail";
     }
 
     @GetMapping("/create")
-    public String boardCreate(
-            Model model
-    ) {
-        var categories = categoryService.getCategoryList();
-        model.addAttribute("categories", categories);
-
-        return "admin/board/create";
+    public String categoryCreate() {
+        return "admin/category/create";
     }
 
     @PostMapping("")
     @ResponseBody
-    public String boardCreate(
-            @RequestParam String name,
-            @RequestParam(name = "category") long categoryId
+    public String categoryCreate(
+            @RequestParam String name
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        boardService.createBoard(name, categoryId, suId);
+        categoryService.createCategory(name, suId);
 
         return "";
     }
 
     @DeleteMapping("")
     @ResponseBody
-    public String boardCreate(
+    public String categoryCreate(
             @RequestParam long id
     ) {
-        boardService.delete(id);
+        categoryService.delete(id);
 
         return "";
     }
 
     @GetMapping("/update")
-    public String boardUpdate(
+    public String categoryUpdate(
             Model model,
             @RequestParam int id
     ) {
-        var board = boardService.getBoardById(id);
-        model.addAttribute("board", board);
+        var board = categoryService.getById(id);
+        model.addAttribute("category", board);
 
-        var categories = categoryService.getCategoryList();
-        model.addAttribute("categories", categories);
-
-        return "admin/board/update";
+        return "admin/category/update";
     }
 
     @PatchMapping("")
     @ResponseBody
-    public String boardPatch(
+    public String categoryPatch(
             @RequestParam long id,
-            @RequestParam String name,
-            @RequestParam(name = "category") long categoryId
+            @RequestParam String name
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        boardService.patch(id, suId, name, categoryId);
+        categoryService.patch(id, suId, name);
 
         return "";
     }
