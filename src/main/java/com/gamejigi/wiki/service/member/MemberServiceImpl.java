@@ -34,7 +34,7 @@ public class MemberServiceImpl implements MemberService {
             result = memberRepository.findAll(pageable);
         }
         else {
-           result = null;
+           result = memberRepository.findPageByNameLike(searchStr, pageable);
         }
         return PaginationResponse.<Member>builder()
                 .request(request)
@@ -72,6 +72,7 @@ public class MemberServiceImpl implements MemberService {
                     .phone("010-0000-000" + i)
                     .email("aaa@aaa.com")
                     .isSu(true)
+                    .role(Role.USER)
                     .build();
             memberRepository.save(member);
         }
@@ -92,7 +93,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void createMember(String user_id, String pw, String phone, String email,
-                             String name, LocalDateTime birth, Boolean is_su) {
+                             String name, LocalDateTime birth, Boolean is_su, Role role) {
         MemberEntity member = MemberEntity
                 .builder()
                 .userId(user_id)
@@ -102,6 +103,7 @@ public class MemberServiceImpl implements MemberService {
                 .name(name)
                 .birth(birth)
                 .isSu(is_su)
+                .role(role)
                 .build();
 
         memberRepository.save(member);
@@ -114,7 +116,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void patch(long id, String user_id, String pw, String phone,
-                      String email, String name, LocalDateTime birth, Boolean is_su) {
+                      String email, String name, LocalDateTime birth, Boolean is_su, Role role) {
 
         MemberEntity oldMember = memberRepository.findById(id).orElse(null);
 
@@ -126,6 +128,7 @@ public class MemberServiceImpl implements MemberService {
                 .name(name)
                 .birth(birth)
                 .isSu(is_su)
+                .role(role)
                 .build();
 
         memberRepository.save(newMember);
