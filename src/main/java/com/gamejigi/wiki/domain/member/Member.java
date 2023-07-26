@@ -33,7 +33,7 @@ public class Member {
         email = memberEntity.getEmail();
         name = memberEntity.getName();
         birth = memberEntity.getBirth();
-        is_su = memberEntity.getIsSu();
+        is_su = memberEntity.getIs_su();
         role = memberEntity.getRole();
         createdDate = memberEntity.getCreatedDate();
         modifiedDate = memberEntity.getModifiedDate();
