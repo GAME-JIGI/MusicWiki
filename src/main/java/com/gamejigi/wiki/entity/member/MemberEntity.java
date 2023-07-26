@@ -49,7 +49,7 @@ public class MemberEntity extends BaseTimeEntity {
     private LocalDateTime birth;
 
     @Column(nullable = false)
-    private Boolean isSu;
+    private Boolean is_su;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -75,7 +75,7 @@ public class MemberEntity extends BaseTimeEntity {
         this.email = email;
         this.name = name;
         this.birth = birth;
-        this.isSu = isSu;
+        this.is_su = isSu;
         this.role = role;
     }
 
