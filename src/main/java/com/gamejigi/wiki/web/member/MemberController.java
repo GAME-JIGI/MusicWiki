@@ -1,5 +1,6 @@
 package com.gamejigi.wiki.web.member;
 
+import com.gamejigi.wiki.domain.member.role.Role;
 import com.gamejigi.wiki.service.board.BoardService;
 import com.gamejigi.wiki.service.category.CategoryService;
 import com.gamejigi.wiki.util.PaginationRequest;
@@ -10,13 +11,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("admin/member")
 @RequiredArgsConstructor
 public class MemberController {
 
-    public final BoardService boardService;
-    public final CategoryService categoryService;
     public final MemberService memberService;
 
     @GetMapping("")
@@ -38,7 +39,7 @@ public class MemberController {
                 .sort(sort)
                 .sortColumn(sortColumn)
                 .build();
-        var pagination = boardService.getBoardList(request);
+        var pagination = memberService.getMemberList(request);
 
         model.addAttribute("pagination", pagination);
 
@@ -80,54 +81,58 @@ public class MemberController {
     }
 
     @GetMapping("/create")
+    public String memberCreate() {
+        return "admin/member/create";
+    }
+
+    @PostMapping("")
     @ResponseBody
     public String memberCreate(
+            @RequestParam String user_id,
+            @RequestParam String pw,
+            @RequestParam String phone,
+            @RequestParam String email,
             @RequestParam String name,
-            @RequestParam(name = "member") long memberId
+            @RequestParam LocalDateTime birth,
+            @RequestParam Boolean is_su,
+            @RequestParam Role role
     ) {
-        //추후에 계정ID를 세션에서 가져오는 코드 필요
-        long suId = memberService.getByName("admin").getId();
 
-        //memberService.createMember(memberId,);
+        memberService.createMember(user_id, pw, phone, email, name, birth, is_su, role);
 
         return "";
     }
 
     @DeleteMapping("")
     @ResponseBody
-    public String boardCreate(
+    public String memberCreate(
             @RequestParam long id
     ) {
-        boardService.delete(id);
+        memberService.delete(id);
 
         return "";
     }
 
     @GetMapping("/update")
-    public String boardUpdate(
-            Model model,
-            @RequestParam int id
-    ) {
-        var board = boardService.getBoardById(id);
-        model.addAttribute("board", board);
-
-        var categories = categoryService.getCategoryList();
-        model.addAttribute("categories", categories);
-
+    public String memberUpdate() {
         return "admin/member/update";
     }
 
     @PatchMapping("")
     @ResponseBody
-    public String boardPatch(
+    public String memberPatch(
             @RequestParam long id,
             @RequestParam String name,
-            @RequestParam(name = "category") long categoryId
+            @RequestParam String user_id,
+            @RequestParam String pw,
+            @RequestParam String phone,
+            @RequestParam String email,
+            @RequestParam LocalDateTime birth,
+            @RequestParam Boolean is_su,
+            @RequestParam Role role
     ) {
-        //추후에 계정ID를 세션에서 가져오는 코드 필요
-        long suId = memberService.getByName("admin").getId();
 
-        boardService.patch(id, suId, name, categoryId);
+        memberService.patch(id, user_id, pw, phone, email, name, birth, is_su, role);
 
         return "";
     }
