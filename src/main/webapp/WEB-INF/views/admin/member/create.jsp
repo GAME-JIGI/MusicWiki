@@ -55,7 +55,79 @@
 
                         <div class="row">
 
-                            <!-- 회원 이름 -->
+                            <!-- 회원 아이디 -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    회원 아이디</div>
+                                                <input name="user_id" type="text" class="form-control" aria-label="">
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 회원 비밀번호 -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    회원 비밀번호</div>
+                                                <input name="pw" type="text" class="form-control" aria-label="">
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 회원 전화번호 -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    회원 전화번호</div>
+                                                <input name="phone" type="text" class="form-control" aria-label="">
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 회원 이메일 -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    회원 이메일</div>
+                                                <input name="email" type="text" class="form-control" aria-label="">
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 회원 비밀번호 -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
@@ -73,19 +145,15 @@
                                 </div>
                             </div>
 
-                            <!-- 카테고리 이름 -->
+                            <!-- 회원 생일 -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    회원 아이디</div>
-                                                <select name="user_id" class="form-select" aria-label="">
-                                                    <c:forEach var="user_id" items="${user_id}">
-                                                        <option value="${user_id}">${user_id}</option>
-                                                    </c:forEach>
-                                                </select>
+                                                    회원 생일</div>
+                                                <input name="birth" type="text" class="form-control" aria-label="">
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -94,6 +162,25 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- 회원 성별 -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    회원 성별</div>
+                                                <input name="is_su" type="text" class="form-control" aria-label="">
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
 

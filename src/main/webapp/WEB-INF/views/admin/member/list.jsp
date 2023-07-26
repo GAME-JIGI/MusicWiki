@@ -95,7 +95,9 @@
                                         <div class="dataTables_filter">
                                             <label>
                                                 회원 검색 :
-                                                <input type="search" id="member_search" class="form-control form-control-sm" placeholder="">
+                                                <input type="search" id="member_search" class="form-control form-control-sm" placeholder=""
+                                                       value="${param['search']}"
+                                                       onchange="moveParam('/admin/member', editParam('${parameter}', 'search', getValue('member_search')))">
                                             </label>
                                         </div>
                                     </div>
@@ -155,10 +157,10 @@
                                                         ${row.name}
                                                 </td>
                                                 <td>
-                                                        ${row.category.name}
+                                                        ${row.user_id}
                                                 </td>
                                                 <td>
-                                                        ${row.su.name}
+                                                        ${row.birth}
                                                 </td>
                                                 <td>
                                                         ${row.createdDate}
