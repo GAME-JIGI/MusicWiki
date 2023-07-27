@@ -1,29 +1,30 @@
-package com.gamejigi.wiki.service.debate;
+package com.gamejigi.wiki.service.debateComment;
 
-
-import com.gamejigi.wiki.domain.category.Category;
 import com.gamejigi.wiki.domain.debate.Debate;
+import com.gamejigi.wiki.domain.debateComment.DebateComment;
 import com.gamejigi.wiki.domain.member.role.Role;
+import com.gamejigi.wiki.entity.debateComment.DebateCommentEntity;
 import com.gamejigi.wiki.entity.document.DocumentEntity;
 import com.gamejigi.wiki.entity.debate.DebateEntity;
 import com.gamejigi.wiki.entity.member.MemberEntity;
+import com.gamejigi.wiki.repository.debateComment.DebateCommentRepository;
 import com.gamejigi.wiki.repository.document.DocumentRepository;
 import com.gamejigi.wiki.repository.debate.DebateRepository;
 import com.gamejigi.wiki.repository.member.MemberRepository;
+import com.gamejigi.wiki.service.debate.DebateService;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class DebateServiceImpl implements DebateService {
+public class DebateCommentServiceImpl implements DebateCommentService {
+
+    private final DebateCommentRepository debateCommentRepository;
 
     private final DebateRepository debateRepository;
 
@@ -34,31 +35,22 @@ public class DebateServiceImpl implements DebateService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public List<Debate> getDebateList() {
-        return debateRepository
-                .findAll(Sort.by(Sort.Order.asc("name")))
-                .stream()
-                .map(Debate::new)
-                .toList();
-    }
-
-    @Override
-    public PaginationResponse<Debate> getDebateList(PaginationRequest request) {
+    public PaginationResponse<DebateComment> getDebateCommentList(PaginationRequest request) {
         String searchStr = "%" + request.getSearch() + "%";
         Pageable pageable = request.getPageable();
 
-        Page<DebateEntity> result;
+        Page<DebateCommentEntity> result;
         if (searchStr.compareTo("%%") == 0) {
-            result = debateRepository.findAll(pageable);
+            result = debateCommentRepository.findAll(pageable);
         }
         else {
-            result = debateRepository.findPageByNameLike(searchStr, pageable);
+            result = debateCommentRepository.findPageByNameLike(searchStr, pageable);
         }
 
-        return PaginationResponse.<Debate>builder()
+        return PaginationResponse.<DebateComment>builder()
                 .request(request)
                 .columnList(result.stream()
-                        .map(Debate::new)
+                        .map(DebateComment::new)
                         .toList())
                 .pageCount(result.getTotalPages())
                 .rowsCount(result.getTotalElements())
@@ -93,31 +85,43 @@ public class DebateServiceImpl implements DebateService {
                     return documentRepository.save(document);
                 });
 
-        //토론 100개 생성
+        //debate1 만들기
+        DebateEntity debate1 = debateRepository.findByName("debate1")
+                .orElseGet(() -> {
+                    //debate1 없으면 만들기
+                    DebateEntity debate = DebateEntity.builder()
+                            .su(su)
+                            .name("debate1")
+                            .build();
+                    return debateRepository.save(debate);
+                });
+
+        //댓글 100개 생성
         for (int i = 0; i < 100; i++) {
-            DebateEntity debate = DebateEntity.builder()
+            DebateCommentEntity debateComment = DebateCommentEntity.builder()
                     .document(document1)
-                    .su(su)
-                    .name("debate"+i)
+                    .debate(debate1)
+                    .writer(su)
+                    .content("debateComment"+i)
                     .build();
-            debateRepository.save(debate);
+            debateCommentRepository.save(debateComment);
         }
     }
 
     @Override
     public void deleteTestcase() {
-        debateRepository.deleteAll();
+        debateCommentRepository.deleteAll();
     }
 
     @Override
-    public Debate getDebateById(long id) {
-        return debateRepository.findById(id)
-                .map(Debate::new)
+    public DebateComment getDebateCommentById(long id) {
+        return debateCommentRepository.findById(id)
+                .map(DebateComment::new)
                 .orElse(null);
     }
 
     @Override
-    public void createDebate(String name, long documentId, long suId) {
+    public void createDebateComment(String name, long documentId,long debateId, long suId) {
 
         MemberEntity su = memberRepository
                 .findById(suId)
@@ -127,35 +131,43 @@ public class DebateServiceImpl implements DebateService {
                 .findById(documentId)
                 .orElse(null);
 
-        DebateEntity debate = DebateEntity
+        DebateEntity debate = debateRepository
+                .findById(debateId)
+                .orElse(null);
+
+        DebateCommentEntity debateComment = DebateCommentEntity
                 .builder()
-                .su(su)
-                .name(name)
+                .writer(su)
+                .content(name)
                 .document(document)
+                .debate(debate)
                 .build();
 
-        debateRepository.save(debate);
+        debateCommentRepository.save(debateComment);
     }
 
     @Override
     public void delete(long id) {
-        debateRepository.deleteById(id);
+        debateCommentRepository.deleteById(id);
     }
 
     @Override
-    public void patch(long id, long suId, String name, long documentId) {
-        DebateEntity oldDebate = debateRepository.findById(id).orElse(null);
+    public void patch(long id, long suId, String name, long documentId, long debateId) {
+        DebateCommentEntity oldDebateComment = debateCommentRepository.findById(id).orElse(null);
         DocumentEntity newDocument = documentRepository.findById(documentId).orElse(null);
+        DebateEntity newDebate = debateRepository.findById(debateId).orElse(null);
         MemberEntity newSu = memberRepository.findById(suId).orElse(null);
 
-        DebateEntity newDebate = DebateEntity.builder()
+        DebateCommentEntity newDebateComment = DebateCommentEntity.builder()
                 .id(id)
-                .name(name)
+                .content(name)
                 .document(newDocument)
-                .su(newSu)
+                .debate(newDebate)
+                .writer(newSu)
                 .build();
 
-        debateRepository.save(newDebate);
+        debateCommentRepository.save(newDebateComment);
     }
+
 
 }
