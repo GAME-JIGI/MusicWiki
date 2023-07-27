@@ -72,7 +72,7 @@ public class DebateServiceImpl implements DebateService {
         //document1 만들기
         DocumentEntity document1 = documentRepository.findByName("document1")
                 .orElseGet(() -> {
-                    //category1 없으면 만들기
+                    //document1 없으면 만들기
                     DocumentEntity document = DocumentEntity.builder()
                             .su(su)
                             .name("document1")
@@ -85,7 +85,7 @@ public class DebateServiceImpl implements DebateService {
             DebateEntity debate = DebateEntity.builder()
                     .document(document1)
                     .su(su)
-                    .name("document"+i)
+                    .name("debate"+i)
                     .build();
             debateRepository.save(debate);
         }

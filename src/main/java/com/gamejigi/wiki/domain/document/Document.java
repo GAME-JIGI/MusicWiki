@@ -19,7 +19,6 @@ public class Document {
     private Long id;
     private Member su;
     private String name;
-    private String content;
     private int modifyingCount;
     LocalDateTime createdDate;
     LocalDateTime modifiedDate;
@@ -29,7 +28,6 @@ public class Document {
         id = entity.getId();
         su = new Member(entity.getSu());
         name = entity.getName();
-        content = entity.getContent();
         modifyingCount = entity.getModifyingCount();
         createdDate = entity.getCreatedDate();
         modifiedDate = entity.getModifiedDate();

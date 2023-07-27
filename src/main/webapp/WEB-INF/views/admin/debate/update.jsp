@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="categories" scope="request" type="java.util.List<com.gamejigi.wiki.domain.document.Document>"/>
-<jsp:useBean id="board" scope="request" type="com.gamejigi.wiki.domain.debate.Debate"/>
+<jsp:useBean id="documents" scope="request" type="java.util.List<com.gamejigi.wiki.domain.document.Document>"/>
+<jsp:useBean id="debate" scope="request" type="com.gamejigi.wiki.domain.debate.Debate"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@
                     <h1 class="h3 mb-0 text-gray-800">토론 관리 - 수정</h1>
                 </div>
 
-                <form id="board-form">
+                <form id="debate-form">
                     <input type="hidden" name="id" value="${debate.id}" />
 
                     <div class="row">

@@ -81,7 +81,7 @@
                                         <div class="dataTables_length">
                                             <label>
                                                 줄 수
-                                                <select name="length" id="board_size" class="custom-select custom-select-sm form-control form-control-sm"
+                                                <select name="length" id="debate_size" class="custom-select custom-select-sm form-control form-control-sm"
                                                         onchange="moveParam('/admin/debate', editParam('${parameter}', 'size', getValue('debate_size')));">
                                                     <option value="10" ${size == 10 ? "selected" : ""}>10</option>
                                                     <option value="25" ${size == 25 ? "selected" : ""}>25</option>
@@ -95,7 +95,7 @@
                                         <div class="dataTables_filter">
                                             <label>
                                                 토론 이름 검색 :
-                                                <input type="search" id="board_search" class="form-control form-control-sm" placeholder=""
+                                                <input type="search" id="debate_search" class="form-control form-control-sm" placeholder=""
                                                        value="${param['search']}"
                                                        onchange="moveParam('/admin/debate', editParam('${parameter}', 'search', getValue('debate_search')))">
                                             </label>
@@ -126,7 +126,7 @@
 
                                                     <c:set var="next_order" value="${is_sort_col ? (sort_order == 2 ? 1 : 2) : 1}"/>
                                                     <c:set var="arrow_image" value="${is_sort_col ? arrow_images[sort_order] : ''}"/>
-                                                    <th id="board_column_${col}" class="sorting ${arrow_image}" tabindex="0"
+                                                    <th id="debate_column_${col}" class="sorting ${arrow_image}" tabindex="0"
                                                         onclick="moveParam('/admin/debate', editParamSort('${parameter}', '${next_order}', '${col}'));">
                                                             ${content}
                                                     </th>

@@ -27,9 +27,6 @@ public class DocumentEntity extends BaseTimeEntity {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 100000)
-    private String content;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "su_id")
     private MemberEntity su;
@@ -38,10 +35,9 @@ public class DocumentEntity extends BaseTimeEntity {
     private int modifyingCount;
 
     @Builder
-    public DocumentEntity(Long id, String name, String content, MemberEntity su, int modifyingCount){
+    public DocumentEntity(Long id, String name, MemberEntity su, int modifyingCount){
         this.id = id;
         this.name = name;
-        this.content = content;
         this.su = su;
         this.modifyingCount = modifyingCount;
     }
