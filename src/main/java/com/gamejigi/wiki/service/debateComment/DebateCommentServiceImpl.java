@@ -1,17 +1,16 @@
 package com.gamejigi.wiki.service.debateComment;
 
-import com.gamejigi.wiki.domain.debate.Debate;
+
 import com.gamejigi.wiki.domain.debateComment.DebateComment;
 import com.gamejigi.wiki.domain.member.role.Role;
+import com.gamejigi.wiki.entity.debate.DebateEntity;
 import com.gamejigi.wiki.entity.debateComment.DebateCommentEntity;
 import com.gamejigi.wiki.entity.document.DocumentEntity;
-import com.gamejigi.wiki.entity.debate.DebateEntity;
 import com.gamejigi.wiki.entity.member.MemberEntity;
+import com.gamejigi.wiki.repository.debate.DebateRepository;
 import com.gamejigi.wiki.repository.debateComment.DebateCommentRepository;
 import com.gamejigi.wiki.repository.document.DocumentRepository;
-import com.gamejigi.wiki.repository.debate.DebateRepository;
 import com.gamejigi.wiki.repository.member.MemberRepository;
-import com.gamejigi.wiki.service.debate.DebateService;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -56,7 +57,6 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                 .rowsCount(result.getTotalElements())
                 .build();
     }
-
     @Override
     public void createTestcase() {
         //관리자 계정 찾기
@@ -73,6 +73,7 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                             .build();
                     return memberRepository.save(member);
                 });
+
 
         //document1 만들기
         DocumentEntity document1 = documentRepository.findByName("document1")
@@ -91,6 +92,7 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                     //debate1 없으면 만들기
                     DebateEntity debate = DebateEntity.builder()
                             .su(su)
+                            .document(document1)
                             .name("debate1")
                             .build();
                     return debateRepository.save(debate);

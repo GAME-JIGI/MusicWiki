@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="documents" scope="request" type="java.util.List<com.gamejigi.wiki.domain.document.Document>"/>
-<jsp:useBean id="debate" scope="request" type="com.gamejigi.wiki.domain.debate.Debate"/>
+<jsp:useBean id="debates" scope="request" type="java.util.List<com.gamejigi.wiki.domain.debate.Debate>"/>
 <jsp:useBean id="debateComment" scope="request" type="com.gamejigi.wiki.domain.debateComment.DebateComment"/>
 
 <!DOCTYPE html>

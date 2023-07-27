@@ -108,10 +108,10 @@
                                 <c:set var="arrow_images_str" value="sorting,sorting_asc,sorting_desc"/>
                                 <c:set var="arrow_images" value="${fn:split(arrow_images_str, ',')}"/>
 
-                                <c:set var="cols_str" value="id,name,document.name,su.name,createdDate,modifiedDate"/>
+                                <c:set var="cols_str" value="id,name,document.name,debate.name,su.name,createdDate,modifiedDate"/>
                                 <c:set var="cols" value="${fn:split(cols_str, ',')}"/>
 
-                                <c:set var="contents_str" value="번호,토론 댓글 내용,문서,작업자 이름,생성 일시,수정 일시"/>
+                                <c:set var="contents_str" value="번호,토론 댓글 내용,문서,토론,작업자 이름,생성 일시,수정 일시"/>
                                 <c:set var="contents" value="${fn:split(contents_str, ',')}"/>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -140,6 +140,7 @@
                                                 <th rowspan="1" colspan="1">번호</th>
                                                 <th rowspan="1" colspan="1">토론 댓글 내용</th>
                                                 <th rowspan="1" colspan="1">문서</th>
+                                                <th rowspan="1" colspan="1">토론</th>
                                                 <th rowspan="1" colspan="1">작업자 이름</th>
                                                 <th rowspan="1" colspan="1">생성 일시</th>
                                                 <th rowspan="1" colspan="1">수정 일시</th>
@@ -154,10 +155,13 @@
                                                             ${row.id}
                                                     </td>
                                                     <td>
-                                                            ${row.name}
+                                                            ${row.content}
                                                     </td>
                                                     <td>
                                                             ${row.document.name}
+                                                    </td>
+                                                    <td>
+                                                            ${row.debate.name}
                                                     </td>
                                                     <td>
                                                             ${row.su.name}
