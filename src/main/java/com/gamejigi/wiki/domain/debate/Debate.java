@@ -1,34 +1,33 @@
-package com.gamejigi.wiki.domain.document;
+package com.gamejigi.wiki.domain.debate;
 
+import com.gamejigi.wiki.domain.document.Document;
 import com.gamejigi.wiki.domain.member.Member;
-import com.gamejigi.wiki.entity.document.DocumentEntity;
-import java.time.LocalDateTime;
+import com.gamejigi.wiki.entity.debate.DebateEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-
+import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
-
-public class Document {
+public class Debate {
 
     private Long id;
-    private Member su;
     private String name;
-    private int modifyingCount;
+    private Document document;
+    private Member su;
     LocalDateTime createdDate;
     LocalDateTime modifiedDate;
 
 
-    public Document(DocumentEntity entity){
+    public Debate(DebateEntity entity) {
         id = entity.getId();
-        su = new Member(entity.getSu());
         name = entity.getName();
-        modifyingCount = entity.getModifyingCount();
+        document = new Document(entity.getDocument());
+        su = new Member(entity.getSu());
         createdDate = entity.getCreatedDate();
         modifiedDate = entity.getModifiedDate();
     }

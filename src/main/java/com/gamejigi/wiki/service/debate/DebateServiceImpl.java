@@ -1,68 +1,55 @@
-package com.gamejigi.wiki.service.document;
+package com.gamejigi.wiki.service.debate;
 
-import com.gamejigi.wiki.domain.document.Document;
+
+import com.gamejigi.wiki.domain.debate.Debate;
 import com.gamejigi.wiki.domain.member.role.Role;
 import com.gamejigi.wiki.entity.document.DocumentEntity;
+import com.gamejigi.wiki.entity.debate.DebateEntity;
 import com.gamejigi.wiki.entity.member.MemberEntity;
 import com.gamejigi.wiki.repository.document.DocumentRepository;
+import com.gamejigi.wiki.repository.debate.DebateRepository;
 import com.gamejigi.wiki.repository.member.MemberRepository;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DocumentServiceImpl implements DocumentService {
+public class DebateServiceImpl implements DebateService {
+
+    private final DebateRepository debateRepository;
 
     private final DocumentRepository documentRepository;
+
     private final MemberRepository memberRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public List<Document> getDocumentList() {
-        return documentRepository
-                .findAll(Sort.by(Order.asc("name")))
-                .stream()
-                .map(Document::new)
-                .toList();
-    }
-
-    @Override
-    public PaginationResponse<Document> getDocumentList(PaginationRequest request) {
+    public PaginationResponse<Debate> getDebateList(PaginationRequest request) {
         String searchStr = "%" + request.getSearch() + "%";
         Pageable pageable = request.getPageable();
 
-        Page<DocumentEntity> result;
+        Page<DebateEntity> result;
         if (searchStr.compareTo("%%") == 0) {
-            result = documentRepository.findAll(pageable);
+            result = debateRepository.findAll(pageable);
         }
         else {
-            result = documentRepository.findPageByNameLike(searchStr, pageable);
+            result = debateRepository.findPageByNameLike(searchStr, pageable);
         }
 
-        return PaginationResponse.<Document>builder()
+        return PaginationResponse.<Debate>builder()
                 .request(request)
                 .columnList(result.stream()
-                        .map(Document::new)
+                        .map(Debate::new)
                         .toList())
                 .pageCount(result.getTotalPages())
                 .rowsCount(result.getTotalElements())
                 .build();
-    }
-
-    @Override
-    public Document getById(long id) {
-        return documentRepository
-                .findById(id)
-                .map(Document::new)
-                .orElse(null);
     }
 
     @Override
@@ -82,51 +69,80 @@ public class DocumentServiceImpl implements DocumentService {
                     return memberRepository.save(member);
                 });
 
-        //게시판 카테고리 100개 생성
+        //document1 만들기
+        DocumentEntity document1 = documentRepository.findByName("document1")
+                .orElseGet(() -> {
+                    //document1 없으면 만들기
+                    DocumentEntity document = DocumentEntity.builder()
+                            .su(su)
+                            .name("document1")
+                            .build();
+                    return documentRepository.save(document);
+                });
+
+        //토론 100개 생성
         for (int i = 0; i < 100; i++) {
-            DocumentEntity board = DocumentEntity.builder()
+            DebateEntity debate = DebateEntity.builder()
+                    .document(document1)
                     .su(su)
-                    .name("document"+i)
+                    .name("debate"+i)
                     .build();
-            documentRepository.save(board);
+            debateRepository.save(debate);
         }
     }
 
     @Override
     public void deleteTestcase() {
-        documentRepository.deleteAll();
+        debateRepository.deleteAll();
     }
 
     @Override
-    public void createDocument(String name, long suId) {
+    public Debate getDebateById(long id) {
+        return debateRepository.findById(id)
+                .map(Debate::new)
+                .orElse(null);
+    }
+
+    @Override
+    public void createDebate(String name, long documentId, long suId) {
+
         MemberEntity su = memberRepository
                 .findById(suId)
                 .orElse(null);
 
-        DocumentEntity document = DocumentEntity
+        DocumentEntity document = documentRepository
+                .findById(documentId)
+                .orElse(null);
+
+        DebateEntity debate = DebateEntity
                 .builder()
-                .name(name)
                 .su(su)
+                .name(name)
+                .document(document)
                 .build();
 
-        documentRepository.save(document);
+        debateRepository.save(debate);
     }
 
     @Override
     public void delete(long id) {
-        documentRepository.deleteById(id);
+        debateRepository.deleteById(id);
     }
 
     @Override
-    public void patch(long id, long suId, String name) {
+    public void patch(long id, long suId, String name, long documentId) {
+        DebateEntity oldDebate = debateRepository.findById(id).orElse(null);
+        DocumentEntity newDocument = documentRepository.findById(documentId).orElse(null);
         MemberEntity newSu = memberRepository.findById(suId).orElse(null);
 
-        DocumentEntity newDocument = DocumentEntity.builder()
+        DebateEntity newDebate = DebateEntity.builder()
                 .id(id)
                 .name(name)
+                .document(newDocument)
                 .su(newSu)
                 .build();
 
-        documentRepository.save(newDocument);
+        debateRepository.save(newDebate);
     }
+
 }

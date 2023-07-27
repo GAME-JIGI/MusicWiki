@@ -29,9 +29,15 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/admin/member">
+        <a class="nav-link" href="/admin/category">
             <i class="fas fa-fw fa-table"></i>
             <span>카테고리 관리</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/debate">
+            <i class="fas fa-fw fa-table"></i>
+            <span>토론 관리</span></a>
     </li>
 
     <!-- Divider -->

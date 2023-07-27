@@ -1,6 +1,7 @@
-package com.gamejigi.wiki.entity.document;
+package com.gamejigi.wiki.entity.debateComment;
 
 import com.gamejigi.wiki.entity.BaseTimeEntity;
+import com.gamejigi.wiki.entity.debate.DebateEntity;
 import com.gamejigi.wiki.entity.member.MemberEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,36 +11,39 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@Entity()
+@Entity
 
-public class DocumentEntity extends BaseTimeEntity {
+public class DebateCommentEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String name;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "su_id")
-    private MemberEntity su;
+    @JoinColumn(name = "debate_id")
+    private DebateEntity debate;
 
-    @Column(nullable = false, length = 10000)
-    private int modifyingCount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id")
+    private MemberEntity writer;
 
     @Builder
-    public DocumentEntity(Long id, String name, MemberEntity su, int modifyingCount){
+    public DebateCommentEntity(Long id, String content, DebateEntity debate, MemberEntity writer){
         this.id = id;
-        this.name = name;
-        this.su = su;
-        this.modifyingCount = modifyingCount;
+        this.content = content;
+        this.debate = debate;
+        this.writer = writer;
     }
 
 }
