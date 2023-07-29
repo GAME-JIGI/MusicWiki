@@ -1,7 +1,9 @@
 package com.gamejigi.wiki.service.debateComment;
 
 
+import com.gamejigi.wiki.domain.debate.Debate;
 import com.gamejigi.wiki.domain.debateComment.DebateComment;
+import com.gamejigi.wiki.domain.document.Document;
 import com.gamejigi.wiki.domain.member.role.Role;
 import com.gamejigi.wiki.entity.debate.DebateEntity;
 import com.gamejigi.wiki.entity.debateComment.DebateCommentEntity;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 
 @Service
@@ -38,15 +41,19 @@ public class DebateCommentServiceImpl implements DebateCommentService {
     @Override
     public PaginationResponse<DebateComment> getDebateCommentList(PaginationRequest request) {
         String searchStr = "%" + request.getSearch() + "%";
+        String searchType = request.getSearchType();
         Pageable pageable = request.getPageable();
 
         Page<DebateCommentEntity> result;
-        if (searchStr.compareTo("%%") == 0) {
-            result = debateCommentRepository.findAll(pageable);
-        }
-        else {
+        if ("name".equals(searchType)) {
             result = debateCommentRepository.findPageByNameLike(searchStr, pageable);
-        }
+        } else if ("debate".equals(searchType)) {
+            result = debateCommentRepository.findPageByDebateNameLike(searchStr, pageable);
+        } else if ("document".equals(searchType)) {
+            result = debateCommentRepository.findPageByDocumentNameLike(searchStr, pageable);
+        } else if ("writer".equals(searchType)) {
+            result = debateCommentRepository.findPageByWriterNameLike(searchStr, pageable);
+        } else result = debateCommentRepository.findAll(pageable);
 
         return PaginationResponse.<DebateComment>builder()
                 .request(request)

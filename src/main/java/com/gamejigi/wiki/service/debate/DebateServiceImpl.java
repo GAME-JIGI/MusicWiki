@@ -45,15 +45,14 @@ public class DebateServiceImpl implements DebateService {
     @Override
     public PaginationResponse<Debate> getDebateList(PaginationRequest request) {
         String searchStr = "%" + request.getSearch() + "%";
+        String searchType = request.getSearchType();
         Pageable pageable = request.getPageable();
 
         Page<DebateEntity> result;
-        if (searchStr.compareTo("%%") == 0) {
-            result = debateRepository.findAll(pageable);
-        }
-        else {
-            result = debateRepository.findPageByNameLike(searchStr, pageable);
-        }
+        if ("name".equals(searchType)) result = debateRepository.findPageByNameLike(searchStr, pageable);
+        else if ("document".equals(searchType)) result = debateRepository.findPageByDocumentNameLike(searchStr, pageable);
+        else if ("su".equals(searchType)) result = debateRepository.findPageBySuNameLike(searchStr, pageable);
+        else result = debateRepository.findAll(pageable);
 
         return PaginationResponse.<Debate>builder()
                 .request(request)

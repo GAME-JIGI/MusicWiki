@@ -76,7 +76,7 @@
                         <div class="table-responsive">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6">
+                                    <div class="col-sm-12 col-md-4">
                                         <c:set var="size" value="${pagination.request.maxSize}" />
                                         <div class="dataTables_length">
                                             <label>
@@ -91,10 +91,24 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6">
+                                    <div class="col-sm-12 col-md-4">
+                                        <c:set var="type" value="${pagination.request.searchType}" />
+                                        <div class="dataTables_length">
+                                            <label>
+                                                검색 종류
+                                                <select name="type" id="debateComment_searchType" class="custom-select custom-select-sm form-control form-control-sm"
+                                                        onchange="moveParam('/admin/debateComment', editParam('${parameter}', 'type', getValue('debateComment_searchType')));">
+                                                    <c:forEach var="row" items="${fn:split('name,document,debate,writer', ',')}">
+                                                        <option value="${row}" ${type == row ? "selected" : ""}>${row}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
                                         <div class="dataTables_filter">
                                             <label>
-                                                토론 댓글 내용 검색 :
+                                                검색 :
                                                 <input type="search" id="debateComment_search" class="form-control form-control-sm" placeholder=""
                                                        value="${param['search']}"
                                                        onchange="moveParam('/admin/debateComment', editParam('${parameter}', 'search', getValue('debateComment_search')))">

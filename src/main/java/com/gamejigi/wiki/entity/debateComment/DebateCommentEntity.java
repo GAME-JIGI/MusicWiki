@@ -43,6 +43,7 @@ public class DebateCommentEntity extends BaseTimeEntity {
     @JoinColumn(name = "writer_id")
     private MemberEntity writer;
 
+
     @Builder
     public DebateCommentEntity(Long id, String content, DebateEntity debate, DocumentEntity document ,MemberEntity writer){
         this.id = id;
