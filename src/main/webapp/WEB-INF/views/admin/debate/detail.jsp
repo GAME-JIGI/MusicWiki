@@ -193,6 +193,28 @@
                         </div>
                     </div>
 
+                    <!-- 토론 댓글 넘어가기 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            해당 토론 댓글 보기</div>
+                                        <a tabindex="0" href="/admin/debateComment?type=debate?&search=${debate.name}">
+                                            <button type="button" class="btn btn-primary">
+                                                <div class="h5 mb-0 font-weight-bold">해당 토론 댓글 보기</div>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-wrench fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
