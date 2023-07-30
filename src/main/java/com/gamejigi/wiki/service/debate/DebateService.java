@@ -1,12 +1,16 @@
 package com.gamejigi.wiki.service.debate;
 
 import com.gamejigi.wiki.domain.debate.Debate;
+import com.gamejigi.wiki.domain.document.Document;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
+
+import java.util.List;
 
 
 public interface DebateService {
 
+    List<Debate> getDebateList();
     PaginationResponse<Debate> getDebateList(PaginationRequest request);
 
     void createTestcase();
@@ -18,6 +22,6 @@ public interface DebateService {
 
     void delete(long id);
 
-    void patch(long id, long suId, String name, long categoryId);
+    void patch(long id, long suId, String name, long documentId);
 
 }

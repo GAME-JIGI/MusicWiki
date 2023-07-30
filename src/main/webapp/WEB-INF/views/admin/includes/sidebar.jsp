@@ -40,6 +40,12 @@
             <span>토론 관리</span></a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/debateComment">
+            <i class="fas fa-fw fa-table"></i>
+            <span>토론 댓글 관리</span></a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
