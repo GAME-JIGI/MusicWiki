@@ -92,7 +92,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 토론 이름</div>
                                             <select name="debate" class="form-select" aria-label="">
-                                                <c:forEach var="debates" items="${debates}">
+                                                <c:forEach var="debate" items="${debates}">
                                                     <option value="${debate.id}">${debate.name}</option>
                                                 </c:forEach>
                                             </select>

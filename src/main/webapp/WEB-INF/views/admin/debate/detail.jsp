@@ -201,7 +201,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             해당 토론 댓글 보기</div>
-                                        <a tabindex="0" href="/admin/debateComment?type=debate?&search=${debate.name}">
+                                        <a tabindex="0" href="/admin/debateComment?type=debate&search=${debate.name}">
                                             <button type="button" class="btn btn-primary">
                                                 <div class="h5 mb-0 font-weight-bold">해당 토론 댓글 보기</div>
                                             </button>
