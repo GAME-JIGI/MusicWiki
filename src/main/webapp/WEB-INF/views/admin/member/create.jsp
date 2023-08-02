@@ -104,7 +104,10 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     회원 전화번호</div>
-                                                <input name="phone" type="text" class="form-control" aria-label="">
+<%--                                                <input name="phone" type="text" class="form-control" aria-label="">--%>
+                                                <input name="phone1" type="text" size="3" maxlength="3" class="" aria-label=""> -
+                                                <input name="phone2" type="text" size="4" maxlength="4" class="" aria-label=""> -
+                                                <input name="phone3" type="text" size="4" maxlength="4" class="" aria-label="">
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -158,10 +161,10 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     회원 생일</div>
-                                                <input name="birth" type="text" class="form-control" aria-label="">
-<%--                                                <input name="birth1" type="text" size="4" maxlength="4" class="" aria-label=""> ---%>
-<%--                                                <input name="birth2" type="text" size="2" maxlength="2" class="" aria-label=""> ---%>
-<%--                                                <input name="birth3" type="text" size="2" maxlength="2" class="" aria-label="">--%>
+<%--                                                <input name="birth" type="text" class="form-control" aria-label="">--%>
+                                                <input name="birth1" type="text" size="4" maxlength="4" class="" aria-label=""> -
+                                                <input name="birth2" type="text" size="2" maxlength="2" class="" aria-label=""> -
+                                                <input name="birth3" type="text" size="2" maxlength="2" class="" aria-label="">
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -179,8 +182,8 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     회원 성별</div>
-                                                <input name="is_su" type="radio" value="true" class="" aria-label="" checked> 남성 <br>
-                                                <input name="is_su" type="radio" value="false" class="" aria-label=""> 여성
+                                                <input name="gender" type="radio" value="true" class="" aria-label="" checked> 남성 <br>
+                                                <input name="gender" type="radio" value="false" class="" aria-label=""> 여성
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
