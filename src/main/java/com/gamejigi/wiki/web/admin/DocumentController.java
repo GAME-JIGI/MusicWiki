@@ -2,6 +2,7 @@ package com.gamejigi.wiki.web.admin;
 
 
 import com.gamejigi.wiki.service.board.BoardService;
+import com.gamejigi.wiki.service.document.DocumentService;
 import com.gamejigi.wiki.service.category.CategoryService;
 import com.gamejigi.wiki.service.member.MemberService;
 import com.gamejigi.wiki.util.PaginationRequest;
@@ -18,9 +19,10 @@ public class DocumentController {
     public final BoardService boardService;
     public final CategoryService categoryService;
     public final MemberService memberService;
+    public final DocumentService documentService;
 
     @GetMapping("")
-    public String boardList(
+    public String documentList(
             Model model,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "") String search,
@@ -29,6 +31,7 @@ public class DocumentController {
             @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn
     ) {
 
+
         var request = PaginationRequest.builder()
                 .page(page)
                 .search(search)
@@ -36,17 +39,20 @@ public class DocumentController {
                 .sort(sort)
                 .sortColumn(sortColumn)
                 .build();
-        var pagination = boardService.getBoardList(request);
+
+
+        var pagination = documentService.getDocumentList(request);//============
 
         model.addAttribute("pagination", pagination);
-        return "admin/board/list";
+
+        return "admin/document/list";
     }
 
     @PostMapping("/test")
     @ResponseBody
     public String boardTestCreate() {
 
-        boardService.createTestcase();
+        boardService.createTestcase(); ////
 
         return "";
     }
@@ -55,7 +61,7 @@ public class DocumentController {
     @ResponseBody
     public String boardTestDelete() {
 
-        boardService.deleteTestcase();
+        boardService.deleteTestcase(); //
 
         return "";
     }
@@ -65,17 +71,17 @@ public class DocumentController {
             Model model,
             @RequestParam long id
     ) {
-        var board = boardService.getBoardById(id);
+        var board = documentService.getDocumentById(id); //
         model.addAttribute("board", board);
 
-        return "admin/board/detail";
+        return "admin/document/detail";
     }
 
     @GetMapping("/create")
     public String boardCreate(
             Model model
     ) {
-        var categories = categoryService.getCategoryList();
+        var categories = categoryService.getCategoryList(); //
         model.addAttribute("categories", categories);
 
         return "admin/board/create";
@@ -90,7 +96,7 @@ public class DocumentController {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        boardService.createBoard(name, categoryId, suId);
+        boardService.createBoard(name, categoryId, suId); //
 
         return "";
     }
@@ -133,5 +139,7 @@ public class DocumentController {
 
         return "";
     }
+
+
 
 }
