@@ -2,6 +2,8 @@ package com.gamejigi.wiki.domain.member;
 
 import com.gamejigi.wiki.domain.member.role.Role;
 import com.gamejigi.wiki.entity.member.MemberEntity;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +21,7 @@ public class Member {
     String phone;
     String email;
     String name;
-    LocalDateTime birth;
+    LocalDate birth;
     Boolean is_su;
     Role role;
     LocalDateTime createdDate;

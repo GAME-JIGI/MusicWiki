@@ -16,6 +16,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -46,7 +48,7 @@ public class MemberEntity extends BaseTimeEntity {
     private String name;
 
     @Column
-    private LocalDateTime birth;
+    private LocalDate birth;
 
     @Column(nullable = false)
     private Boolean is_su;
@@ -68,7 +70,7 @@ public class MemberEntity extends BaseTimeEntity {
     private List<LikeEntity> likeList;
 
     @Builder
-    public MemberEntity(String userId, String pw, String phone, String email, String name, LocalDateTime birth, Boolean isSu, Role role) {
+    public MemberEntity(String userId, String pw, String phone, String email, String name, LocalDate birth, Boolean isSu, Role role) {
         this.userId = userId;
         this.pw = pw;
         this.phone = phone;
