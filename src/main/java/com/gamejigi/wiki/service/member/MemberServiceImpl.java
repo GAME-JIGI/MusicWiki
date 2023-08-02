@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -65,12 +66,15 @@ public class MemberServiceImpl implements MemberService {
 
         //회원 100개 생성
         for (int i = 0; i < 100; i++) {
+            String password = "password" + i;
+            String email = "aaa" + i;
             MemberEntity member = MemberEntity.builder()
-                    .name("name" + i)
                     .userId("ID" + i)
-                    .pw(passwordEncoder.encode("1"))
+                    .pw(passwordEncoder.encode(password))
                     .phone("010-0000-000" + i)
-                    .email("aaa@aaa.com")
+                    .email(email + "@aaa.com")
+                    .name("member" + i)
+                    .birth(LocalDate.now())
                     .isSu(true)
                     .role(Role.USER)
                     .build();
@@ -93,11 +97,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void createMember(String user_id, String pw, String phone, String email,
-                             String name, LocalDateTime birth, Boolean is_su, Role role) {
+                             String name, LocalDate birth, Boolean is_su, Role role) {
         MemberEntity member = MemberEntity
                 .builder()
                 .userId(user_id)
-                .pw(pw)
+                .pw(passwordEncoder.encode(pw))
                 .phone(phone)
                 .email(email)
                 .name(name)
@@ -116,13 +120,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void patch(long id, String user_id, String pw, String phone,
-                      String email, String name, LocalDateTime birth, Boolean is_su, Role role) {
+                      String email, String name, LocalDate birth, Boolean is_su, Role role) {
 
         MemberEntity oldMember = memberRepository.findById(id).orElse(null);
 
         MemberEntity newMember = MemberEntity.builder()
                 .userId(user_id)
-                .pw(pw)
+                .pw(passwordEncoder.encode(pw))
                 .phone(phone)
                 .email(email)
                 .name(name)

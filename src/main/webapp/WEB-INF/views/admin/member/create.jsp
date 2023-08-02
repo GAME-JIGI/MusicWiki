@@ -1,6 +1,11 @@
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="org.springframework.web.bind.annotation.RequestParam" %>
+<%@ page import="org.springframework.web.bind.annotation.PostMapping" %>
+<%@ page import="org.springframework.web.bind.annotation.ResponseBody" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="member" scope="request" type="java.util.List<com.gamejigi.wiki.domain.member.Member>"/>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%--<jsp:useBean id="member" scope="request" type="java.util.List<com.gamejigi.wiki.domain.member.Member>"/>--%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -154,6 +159,9 @@
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     회원 생일</div>
                                                 <input name="birth" type="text" class="form-control" aria-label="">
+<%--                                                <input name="birth1" type="text" size="4" maxlength="4" class="" aria-label=""> ---%>
+<%--                                                <input name="birth2" type="text" size="2" maxlength="2" class="" aria-label=""> ---%>
+<%--                                                <input name="birth3" type="text" size="2" maxlength="2" class="" aria-label="">--%>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -171,7 +179,27 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     회원 성별</div>
-                                                <input name="is_su" type="text" class="form-control" aria-label="">
+                                                <input name="is_su" type="radio" value="true" class="" aria-label="" checked> 남성 <br>
+                                                <input name="is_su" type="radio" value="false" class="" aria-label=""> 여성
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--관리자 유무-->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    관리자 유무</div>
+                                                <input name="role" type="radio" value="USER" class="" aria-label="" checked> 회원 <br>
+                                                <input name="role" type="radio" value="ADMIN" class="" aria-label=""> 관리자
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
