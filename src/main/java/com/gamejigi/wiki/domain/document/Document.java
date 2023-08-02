@@ -8,28 +8,27 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
-
 public class Document {
-
     private Long id;
     private Member su;
     private String name;
-    private int modifyingCount;
-    LocalDateTime createdDate;
-    LocalDateTime modifiedDate;
-
+    private String text;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
+    int modifyingCount;
 
     public Document(DocumentEntity entity){
         id = entity.getId();
         su = new Member(entity.getSu());
         name = entity.getName();
-        modifyingCount = entity.getModifyingCount();
+        text = entity.getText();
         createdDate = entity.getCreatedDate();
         modifiedDate = entity.getModifiedDate();
+        modifyingCount = entity.getModifyingCount();
+
     }
 }
