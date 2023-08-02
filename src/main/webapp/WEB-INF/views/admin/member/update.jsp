@@ -1,6 +1,7 @@
+<%@ page import="org.springframework.web.bind.annotation.RequestParam" %>
+<%@ page import="org.springframework.web.bind.annotation.RequestMapping" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="categories" scope="request" type="java.util.List<com.gamejigi.wiki.domain.category.Category>"/>
 <jsp:useBean id="member" scope="request" type="com.gamejigi.wiki.domain.member.Member"/>
 
 <!DOCTYPE html>
@@ -75,24 +76,6 @@
                                 </div>
                             </div>
 
-                            <!-- 회원 이름 -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    회원 이름</div>
-                                                <input name="name" type="text" class="form-control" value="${member.name}" aria-label="">
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- 회원 아이디 -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
@@ -111,7 +94,7 @@
                                 </div>
                             </div>
 
-                            <!-- 회원 패스워드 -->
+                            <!-- 회원 비밀번호 -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
@@ -119,7 +102,7 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     회원 비밀번호</div>
-                                                <input name="pw" type="text" class="form-control" value="${member.pw}" aria-label="">
+                                                <input name="pw" type="text" class="form-control" value="" aria-label="">
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -191,7 +174,45 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     회원 성별</div>
-                                                <input name="is_su" type="text" class="form-control" value="${member.is_su}" aria-label="">
+                                                <c:choose>
+                                                    <c:when test="${member.gender==true}">
+                                                        <input name="gender" type="radio" value="true" class="" aria-label="" checked> 남성 <br>
+                                                        <input name="gender" type="radio" value="false" class="" aria-label=""> 여성
+                                                    </c:when>
+                                                    <c:when test="${member.gender==false}">
+                                                        <input name="gender" type="radio" value="true" class="" aria-label=""> 남성 <br>
+                                                        <input name="gender" type="radio" value="false" class="" aria-label="" checked> 여성
+                                                    </c:when>
+                                                </c:choose>
+<%--                                                <input name="gender" type="text" class="form-control" value="${member.gender}" aria-label="">--%>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 관리자 유무 -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    관리자 유무</div>
+                                                <c:choose>
+                                                    <c:when test="${member.role == 'ADMIN'}">
+                                                        <input name="role" type="radio" value="ADMIN" class="" aria-label="" checked> 관리자 <br>
+                                                        <input name="role" type="radio" value="USER" class="" aria-label=""> 회원
+                                                    </c:when>
+                                                    <c:when test="${member.role == 'USER'}">
+                                                        <input name="role" type="radio" value="ADMIN" class="" aria-label=""> 관리자 <br>
+                                                        <input name="role" type="radio" value="USER" class="" aria-label="" checked> 회원
+                                                    </c:when>
+                                                </c:choose>
+                                                <%--                                                <input name="gender" type="text" class="form-control" value="${member.gender}" aria-label="">--%>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
