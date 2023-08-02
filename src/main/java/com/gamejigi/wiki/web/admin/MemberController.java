@@ -1,17 +1,21 @@
-package com.gamejigi.wiki.web.member;
+package com.gamejigi.wiki.web.admin;
 
 import com.gamejigi.wiki.domain.member.role.Role;
 import com.gamejigi.wiki.service.board.BoardService;
 import com.gamejigi.wiki.service.category.CategoryService;
 import com.gamejigi.wiki.util.PaginationRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import com.gamejigi.wiki.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.Encoder;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("admin/member")
@@ -72,9 +76,9 @@ public class MemberController {
     @GetMapping("/detail")
     public String memberDetail(
             Model model,
-            @RequestParam String name
+            @RequestParam String id
     ) {
-        var member = memberService.getByName(name);
+        var member = memberService.getByName(id);
         model.addAttribute("member", member);
 
         return "admin/member/detail";
@@ -93,10 +97,13 @@ public class MemberController {
             @RequestParam String phone,
             @RequestParam String email,
             @RequestParam String name,
-            @RequestParam LocalDateTime birth,
+            @RequestParam LocalDate birth,
             @RequestParam Boolean is_su,
             @RequestParam Role role
     ) {
+
+//        String birth4 = birth1 + birth2 + birth3;
+//        LocalDate birth = LocalDate.parse(birth4, DateFormatter.ISO_DATE);
 
         memberService.createMember(user_id, pw, phone, email, name, birth, is_su, role);
 
@@ -127,7 +134,7 @@ public class MemberController {
             @RequestParam String pw,
             @RequestParam String phone,
             @RequestParam String email,
-            @RequestParam LocalDateTime birth,
+            @RequestParam LocalDate birth,
             @RequestParam Boolean is_su,
             @RequestParam Role role
     ) {

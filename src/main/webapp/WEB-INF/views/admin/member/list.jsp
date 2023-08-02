@@ -108,10 +108,10 @@
                                 <c:set var="arrow_images_str" value="sorting,sorting_asc,sorting_desc"/>
                                 <c:set var="arrow_images" value="${fn:split(arrow_images_str, ',')}"/>
 
-                                <c:set var="cols_str" value="id,name,user_id,birth,createdDate,modifiedDate"/>
+                                <c:set var="cols_str" value="id,name,user_id,phone,createdDate,modifiedDate"/>
                                 <c:set var="cols" value="${fn:split(cols_str, ',')}"/>
 
-                                <c:set var="contents_str" value="번호,회원 이름,회원 아이디,회원 생년월일,생성 일시,수정 일시"/>
+                                <c:set var="contents_str" value="번호,회원 이름,회원 아이디,회원 연락처,생성 일시,수정 일시"/>
                                 <c:set var="contents" value="${fn:split(contents_str, ',')}"/>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -160,7 +160,7 @@
                                                         ${row.user_id}
                                                 </td>
                                                 <td>
-                                                        ${row.birth}
+                                                        ${row.phone}
                                                 </td>
                                                 <td>
                                                         ${row.createdDate}
