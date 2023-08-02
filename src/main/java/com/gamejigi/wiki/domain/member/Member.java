@@ -22,7 +22,7 @@ public class Member {
     String email;
     String name;
     LocalDate birth;
-    Boolean is_su;
+    Boolean gender;
     Role role;
     LocalDateTime createdDate;
     LocalDateTime modifiedDate;
@@ -35,7 +35,7 @@ public class Member {
         email = memberEntity.getEmail();
         name = memberEntity.getName();
         birth = memberEntity.getBirth();
-        is_su = memberEntity.getIs_su();
+        gender = memberEntity.getGender();
         role = memberEntity.getRole();
         createdDate = memberEntity.getCreatedDate();
         modifiedDate = memberEntity.getModifiedDate();
