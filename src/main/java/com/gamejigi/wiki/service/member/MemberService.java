@@ -17,12 +17,14 @@ public interface MemberService {
     void createTestcase();
     void deleteTestcase();
 
-    Member getByName(String name);
+    Member getById(Long id);
 
-    void createMember(String user_id, String pw, String phone, String email, String name, LocalDate birth, Boolean is_su, Role role);
+    Member getByName(String userId);
+
+    void createMember(String user_id, String pw, String phone, String email, String name, LocalDate birth, Boolean gender, Role role);
 
     void delete(long id);
 
-    void patch(long id, String user_id, String pw, String phone, String email, String name, LocalDate birth, Boolean is_su, Role role);
+    void patch(long id, String user_id, String pw, String phone, String email, String name, LocalDate birth, Boolean gender, Role role);
 
 }

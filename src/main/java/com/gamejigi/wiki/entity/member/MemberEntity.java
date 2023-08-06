@@ -23,8 +23,10 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class MemberEntity extends BaseTimeEntity {
@@ -51,7 +53,7 @@ public class MemberEntity extends BaseTimeEntity {
     private LocalDate birth;
 
     @Column(nullable = false)
-    private Boolean is_su;
+    private Boolean gender;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -70,14 +72,14 @@ public class MemberEntity extends BaseTimeEntity {
     private List<LikeEntity> likeList;
 
     @Builder
-    public MemberEntity(String userId, String pw, String phone, String email, String name, LocalDate birth, Boolean isSu, Role role) {
+    public MemberEntity(String userId, String pw, String phone, String email, String name, LocalDate birth, Boolean gender, Role role) {
         this.userId = userId;
         this.pw = pw;
         this.phone = phone;
         this.email = email;
         this.name = name;
         this.birth = birth;
-        this.is_su = isSu;
+        this.gender = gender;
         this.role = role;
     }
 

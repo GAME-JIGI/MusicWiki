@@ -107,24 +107,6 @@
                             </div>
                         </div>
 
-                        <!-- 회원 비밀번호 -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">비밀번호
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${member.pw}</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user-circle fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- 회원 연락처 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
@@ -167,7 +149,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">비밀번호
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">생년월일
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">${member.birth}</div>
                                         </div>
@@ -187,7 +169,42 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">성별
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${member.is_su}</div>
+                                            <c:choose>
+                                                <c:when test="${member.gender==true}">
+                                                    <b> 남성 </b>
+                                                </c:when>
+                                                <c:when test="${member.gender==false}">
+                                                    <b> 여성 </b>
+                                                </c:when>
+                                            </c:choose>
+
+<%--                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${member.gender}</div>--%>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 관리자 유무 -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">관리자 유무
+                                            </div>
+                                            <c:choose>
+                                                <c:when test="${member.role=='ADMIN'}">
+                                                    <b> 관리자 </b>
+                                                </c:when>
+                                                <c:when test="${member.role=='USER'}">
+                                                   <b> 사용자 </b>
+                                                </c:when>
+                                            </c:choose>
+<%--                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${member.role}</div>--%>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-user-circle fa-2x text-gray-300"></i>

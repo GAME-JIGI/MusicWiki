@@ -76,11 +76,10 @@ public class MemberController {
     @GetMapping("/detail")
     public String memberDetail(
             Model model,
-            @RequestParam String id
+            @RequestParam Long id
     ) {
-        var member = memberService.getByName(id);
+        var member = memberService.getById(id);
         model.addAttribute("member", member);
-
         return "admin/member/detail";
     }
 
@@ -94,18 +93,23 @@ public class MemberController {
     public String memberCreate(
             @RequestParam String user_id,
             @RequestParam String pw,
-            @RequestParam String phone,
+            @RequestParam String phone1,
+            @RequestParam String phone2,
+            @RequestParam String phone3,
             @RequestParam String email,
             @RequestParam String name,
-            @RequestParam LocalDate birth,
-            @RequestParam Boolean is_su,
+            @RequestParam String birth1,
+            @RequestParam String birth2,
+            @RequestParam String birth3,
+            @RequestParam Boolean gender,
             @RequestParam Role role
     ) {
 
-//        String birth4 = birth1 + birth2 + birth3;
-//        LocalDate birth = LocalDate.parse(birth4, DateFormatter.ISO_DATE);
+        String birth4 = birth1 + "-" + birth2 + "-" + birth3;
+        String phone = phone1 + "-" + phone2 + "-" + phone3;
+        LocalDate birth = LocalDate.parse(birth4, DateTimeFormatter.ISO_DATE);
 
-        memberService.createMember(user_id, pw, phone, email, name, birth, is_su, role);
+        memberService.createMember(user_id, pw, phone, email, name, birth, gender, role);
 
         return "";
     }
@@ -121,13 +125,19 @@ public class MemberController {
     }
 
     @GetMapping("/update")
-    public String memberUpdate() {
+    public String memberUpdate(
+            Model model,
+            @RequestParam Long id
+    ) {
+        var member = memberService.getById(id);
+        model.addAttribute("member", member);
         return "admin/member/update";
     }
 
     @PatchMapping("")
     @ResponseBody
     public String memberPatch(
+            Model model,
             @RequestParam long id,
             @RequestParam String name,
             @RequestParam String user_id,
@@ -135,11 +145,19 @@ public class MemberController {
             @RequestParam String phone,
             @RequestParam String email,
             @RequestParam LocalDate birth,
-            @RequestParam Boolean is_su,
+            @RequestParam Boolean gender,
             @RequestParam Role role
     ) {
-
-        memberService.patch(id, user_id, pw, phone, email, name, birth, is_su, role);
+        var member = memberService.getById(id);
+        model.addAttribute("member", member);
+        String password;
+        if(pw == null) {
+           password = member.getPw();
+        }
+        else{
+            password = pw;
+        }
+        memberService.patch(id, user_id, password, phone, email, name, birth, gender, role);
 
         return "";
     }

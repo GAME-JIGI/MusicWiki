@@ -10,6 +10,7 @@ import com.gamejigi.wiki.repository.member.MemberRepository;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,11 +32,10 @@ public class MemberServiceImpl implements MemberService {
         Pageable pageable = request.getPageable();
 
         Page<MemberEntity> result;
-        if (searchStr.compareTo("%%") == 0){
+        if (searchStr.compareTo("%%") == 0) {
             result = memberRepository.findAll(pageable);
-        }
-        else {
-           result = memberRepository.findPageByNameLike(searchStr, pageable);
+        } else {
+            result = memberRepository.findPageByNameLike(searchStr, pageable);
         }
         return PaginationResponse.<Member>builder()
                 .request(request)
@@ -57,7 +57,7 @@ public class MemberServiceImpl implements MemberService {
                             .name("admin")
                             .email("email")
                             .role(Role.ADMIN)
-                            .isSu(true)
+                            .gender(true)
                             .userId("admin")
                             .pw(passwordEncoder.encode("admin"))
                             .build();
@@ -68,14 +68,15 @@ public class MemberServiceImpl implements MemberService {
         for (int i = 0; i < 100; i++) {
             String password = "password" + i;
             String email = "aaa" + i;
+            LocalDate birth = LocalDate.now();
             MemberEntity member = MemberEntity.builder()
                     .userId("ID" + i)
                     .pw(passwordEncoder.encode(password))
                     .phone("010-0000-000" + i)
                     .email(email + "@aaa.com")
                     .name("member" + i)
-                    .birth(LocalDate.now())
-                    .isSu(true)
+                    .birth(birth)
+                    .gender(true)
                     .role(Role.USER)
                     .build();
             memberRepository.save(member);
@@ -88,8 +89,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member getByName(String name) {
-        return memberRepository.findByUserId(name)
+    public Member getById(Long id) {
+        return memberRepository.findById(id)
+                .map(Member::new)
+                .orElse(null);
+    }
+
+    @Override
+    public Member getByName(String userId) {
+        return memberRepository.findByUserId(userId)
                 .map(Member::new)
                 .orElse(null);
     }
@@ -97,7 +105,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void createMember(String user_id, String pw, String phone, String email,
-                             String name, LocalDate birth, Boolean is_su, Role role) {
+                             String name, LocalDate birth, Boolean gender, Role role) {
         MemberEntity member = MemberEntity
                 .builder()
                 .userId(user_id)
@@ -106,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(email)
                 .name(name)
                 .birth(birth)
-                .isSu(is_su)
+                .gender(gender)
                 .role(role)
                 .build();
 
@@ -120,21 +128,28 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void patch(long id, String user_id, String pw, String phone,
-                      String email, String name, LocalDate birth, Boolean is_su, Role role) {
+                      String email, String name, LocalDate birth, Boolean gender, Role role) {
 
         MemberEntity oldMember = memberRepository.findById(id).orElse(null);
+        System.out.println(oldMember);
 
-        MemberEntity newMember = MemberEntity.builder()
-                .userId(user_id)
-                .pw(passwordEncoder.encode(pw))
-                .phone(phone)
-                .email(email)
-                .name(name)
-                .birth(birth)
-                .isSu(is_su)
-                .role(role)
-                .build();
+        // 기존 회원 정보가 존재하지 않으면 처리 중단
+        if (oldMember == null) {
+            return;
+        }
+        // 입력된 정보로 기존 회원 정보를 수정
+        oldMember.setUserId(user_id);
+        if (!pw.isEmpty()) {
+            oldMember.setPw(passwordEncoder.encode(pw));
+        }
+        oldMember.setPhone(phone);
+        oldMember.setEmail(email);
+        oldMember.setName(name);
+        oldMember.setBirth(birth);
+        oldMember.setGender(gender);
+        oldMember.setRole(role);
 
-        memberRepository.save(newMember);
+        // 수정된 회원 정보를 데이터베이스에 저장
+        memberRepository.save(oldMember);
     }
 }

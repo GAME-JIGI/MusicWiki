@@ -74,7 +74,7 @@ public class DebateServiceImpl implements DebateService {
                             .name("admin")
                             .email("email")
                             .role(Role.ADMIN)
-                            .isSu(true)
+                            .gender(true)
                             .userId("admin")
                             .pw(passwordEncoder.encode("admin"))
                             .build();

@@ -74,7 +74,7 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                             .name("admin")
                             .email("email")
                             .role(Role.ADMIN)
-                            .isSu(true)
+                            .gender(true)
                             .userId("admin")
                             .pw(passwordEncoder.encode("admin"))
                             .build();

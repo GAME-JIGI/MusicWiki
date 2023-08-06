@@ -12,5 +12,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
     Optional<MemberEntity> findByUserId(String userId);
 
+    Optional<MemberEntity> findById(Long id);
+
     Page<MemberEntity> findPageByNameLike(String name, Pageable pageable);
 }
