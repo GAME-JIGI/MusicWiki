@@ -1,13 +1,10 @@
 package com.gamejigi.wiki.entity.document;
 
 import com.gamejigi.wiki.entity.BaseTimeEntity;
-<<<<<<< HEAD
 import com.gamejigi.wiki.entity.member.MemberEntity;
-=======
 import com.gamejigi.wiki.entity.category.CategoryEntity;
 import com.gamejigi.wiki.entity.member.MemberEntity;
 import com.gamejigi.wiki.entity.post.PostEntity;
->>>>>>> feature/documentCRUD
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,13 +13,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-<<<<<<< HEAD
-=======
+
 import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
 import java.util.List;
->>>>>>> feature/documentCRUD
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

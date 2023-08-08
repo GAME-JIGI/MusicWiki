@@ -50,7 +50,7 @@ public class DocumentController {
 
     @PostMapping("/test")
     @ResponseBody
-    public String boardTestCreate() {
+    public String documentTestCreate() {
 
         boardService.createTestcase(); ////
 
@@ -59,7 +59,7 @@ public class DocumentController {
 
     @DeleteMapping("/test")
     @ResponseBody
-    public String boardTestDelete() {
+    public String documentTestDelete() {
 
         boardService.deleteTestcase(); //
 
@@ -67,75 +67,72 @@ public class DocumentController {
     }
 
     @GetMapping("/detail")
-    public String boardDetail(
+    public String documentDetail(
             Model model,
             @RequestParam long id
     ) {
-        var board = documentService.getDocumentById(id); //
-        model.addAttribute("board", board);
+        var document = documentService.getDocumentById(id); //
+        model.addAttribute("document", document);
 
         return "admin/document/detail";
     }
 
+
     @GetMapping("/create")
-    public String boardCreate(
+    public String documentCreate(
             Model model
     ) {
-        var categories = categoryService.getCategoryList(); //
-        model.addAttribute("categories", categories);
-
-        return "admin/board/create";
+        return "admin/document/create";
     }
+
+
 
     @PostMapping("")
     @ResponseBody
-    public String boardCreate(
+    public String documentCreate(
             @RequestParam String name,
-            @RequestParam(name = "category") long categoryId
+            @RequestParam String text
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        boardService.createBoard(name, categoryId, suId); //
+        documentService.createDocument(name, text, suId); //
 
         return "";
     }
 
     @DeleteMapping("")
     @ResponseBody
-    public String boardCreate(
+    public String documentDelete(
             @RequestParam long id
     ) {
-        boardService.delete(id);
+        documentService.delete(id);
 
         return "";
     }
 
     @GetMapping("/update")
-    public String boardUpdate(
+    public String documentUpdate(
             Model model,
             @RequestParam int id
     ) {
-        var board = boardService.getBoardById(id);
-        model.addAttribute("board", board);
+        var document = documentService.getDocumentById(id);
+        model.addAttribute("document", document);
 
-        var categories = categoryService.getCategoryList();
-        model.addAttribute("categories", categories);
-
-        return "admin/board/update";
+        return "admin/document/update";
     }
 
     @PatchMapping("")
     @ResponseBody
-    public String boardPatch(
+    public String documentPatch(
             @RequestParam long id,
             @RequestParam String name,
-            @RequestParam(name = "category") long categoryId
+            @RequestParam String text
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        boardService.patch(id, suId, name, categoryId);
+        documentService.patch(id, suId, name, text);
 
         return "";
     }

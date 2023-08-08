@@ -1,7 +1,7 @@
 <%@ page import="com.gamejigi.wiki.util.PaginationResponse" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="pagination" scope="request" type="com.gamejigi.wiki.util.PaginationResponse<com.gamejigi.wiki.domain.board.Board>"/>
+<jsp:useBean id="pagination" scope="request" type="com.gamejigi.wiki.util.PaginationResponse<com.gamejigi.wiki.domain.document.Document>"/>
 
 <!DOCTYPE html>
 <html lang="en">

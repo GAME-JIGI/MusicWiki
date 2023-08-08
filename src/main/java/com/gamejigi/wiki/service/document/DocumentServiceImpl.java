@@ -58,7 +58,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Document getById(long id) {
+    public Document getDocumentById(long id) {
         return documentRepository
                 .findById(id)
                 .map(Document::new)
@@ -98,7 +98,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void createDocument(String name, long suId) {
+    public void createDocument(String name, String text, long suId) {
         MemberEntity su = memberRepository
                 .findById(suId)
                 .orElse(null);
@@ -106,6 +106,7 @@ public class DocumentServiceImpl implements DocumentService {
         DocumentEntity document = DocumentEntity
                 .builder()
                 .name(name)
+                .text(text)
                 .su(su)
                 .build();
 
@@ -118,7 +119,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void patch(long id, long suId, String name) {
+    public void patch(long id, long suId, String name, String text) {
         MemberEntity newSu = memberRepository.findById(suId).orElse(null);
 
         DocumentEntity newDocument = DocumentEntity.builder()

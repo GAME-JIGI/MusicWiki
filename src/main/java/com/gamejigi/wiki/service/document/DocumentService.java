@@ -4,21 +4,24 @@ import com.gamejigi.wiki.domain.document.Document;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
 
+import java.util.List;
+
 public interface DocumentService {
-    Document getByName(String name);
+
+    List<Document> getDocumentList();
 
     PaginationResponse<Document> getDocumentList(PaginationRequest request);
 
-    //void createTestcase();
+    void createTestcase();
 
-    //void deleteTestcase();
+    void deleteTestcase();
 
     Document getDocumentById(long id);
 
-    void createDocument(String name, long suId);
+    void createDocument(String name, String text, long suId);
 
     void delete(long id);
 
-    void patch(long id, long suId, String name);
+    void patch(long id, long suId, String name, String text);
 
 }
