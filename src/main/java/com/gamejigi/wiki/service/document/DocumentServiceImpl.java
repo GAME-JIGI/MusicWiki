@@ -125,6 +125,7 @@ public class DocumentServiceImpl implements DocumentService {
         DocumentEntity newDocument = DocumentEntity.builder()
                 .id(id)
                 .name(name)
+                .text(text)
                 .su(newSu)
                 .build();
 

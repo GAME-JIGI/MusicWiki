@@ -89,7 +89,7 @@
                         </div>
                     </div>
 
-                    <!-- 카테고리 이름 -->
+                    <!-- 문서 내용 -->
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100 py-2">
                             <div class="card-body">
