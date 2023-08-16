@@ -120,15 +120,31 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void patch(long id, long suId, String name, String text) {
-        MemberEntity newSu = memberRepository.findById(suId).orElse(null);
+        MemberEntity newSu = memberRepository
+                .findById(suId)
+                .orElse(null);
 
-        DocumentEntity newDocument = DocumentEntity.builder()
+        DocumentEntity document = documentRepository
+                .findById(id)
+                .orElse(null);
+
+        if(document == null){
+            return;
+        }
+            document.setName(name);
+            document.setText(text);
+
+
+        /*
+                .builder()
                 .id(id)
                 .name(name)
                 .text(text)
                 .su(newSu)
                 .build();
 
-        documentRepository.save(newDocument);
+         */
+
+        documentRepository.save(document);
     }
 }

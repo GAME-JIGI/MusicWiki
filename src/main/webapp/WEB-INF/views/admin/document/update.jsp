@@ -48,7 +48,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">게시판 관리 - 수정</h1>
+                    <h1 class="h3 mb-0 text-gray-800">문서 관리 - 수정</h1>
                 </div>
 
                 <form id="document-form">
@@ -56,14 +56,14 @@
 
                     <div class="row">
 
-                        <!-- 게시판 이름 -->
+                        <!-- 문서 이름 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                게시판 이름</div>
+                                                문서 이름</div>
                                             <input name="name" type="text" class="form-control" value="${document.name}" aria-label="">
                                         </div>
                                         <div class="col-auto">

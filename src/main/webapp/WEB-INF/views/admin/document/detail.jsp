@@ -48,7 +48,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">게시판 관리 - 상세</h1>
+                    <h1 class="h3 mb-0 text-gray-800">문서 관리 - 상세</h1>
                 </div>
 
                 <div class="row">
@@ -78,7 +78,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            게시판 이름</div>
+                                            문서 이름</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">${document.name}</div>
                                     </div>
                                     <div class="col-auto">
