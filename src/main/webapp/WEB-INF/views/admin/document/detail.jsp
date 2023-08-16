@@ -145,6 +145,24 @@
                     </div>
                 </div>
 
+                <!-- 수정 횟수 -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">수정 횟수
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${document.modifyingCount}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-user-circle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <hr class="border border-primary border-3 opacity-75">
 
                 <div class="row">

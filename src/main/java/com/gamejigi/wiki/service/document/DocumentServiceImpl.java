@@ -133,6 +133,7 @@ public class DocumentServiceImpl implements DocumentService {
         }
             document.setName(name);
             document.setText(text);
+            document.setModifyingCount(document.getModifyingCount()+1);
 
 
         /*
