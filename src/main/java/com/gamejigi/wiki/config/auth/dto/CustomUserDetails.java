@@ -4,37 +4,40 @@ package com.gamejigi.wiki.config.auth.dto;
 import com.gamejigi.wiki.domain.member.Member;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Getter
-public class CustomUserDetails implements OAuth2User, UserDetails, Serializable {
+public class CustomUserDetails extends User implements OAuth2User, Serializable {
 
     private final Member member;
 
     private Map<String, Object> attributes;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<GrantedAuthority> authorities;
 
     public CustomUserDetails(
             Member member,
-            Map<String, Object> attributes,
-            Collection<? extends GrantedAuthority> authorities) {
+            Map<String, Object> attributes) {
         //이 생성자는 소셜 로그인 할때 씀
+        super(member.getName(), member.getPw(), List.of(member.getRole().getGrantedAuthority()));
         this.member = member;
         this.attributes = attributes;
-        this.authorities = authorities;
+        this.authorities = List.of(member.getRole().getGrantedAuthority());
     }
 
     public CustomUserDetails(
             Member member) {
         //이 생성자는 일반 로그인 할때 씀
+        super(member.getName(), member.getPw(), List.of(member.getRole().getGrantedAuthority()));
         this.member = member;
+        this.authorities = List.of(member.getRole().getGrantedAuthority());
     }
 
-    public Member getMember() {
+    public Member getPrincipal() {
         return member;
     }
 
@@ -44,7 +47,7 @@ public class CustomUserDetails implements OAuth2User, UserDetails, Serializable 
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
@@ -60,22 +63,22 @@ public class CustomUserDetails implements OAuth2User, UserDetails, Serializable 
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override

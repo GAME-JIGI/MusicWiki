@@ -1,20 +1,15 @@
 package com.gamejigi.wiki.web.admin;
 
 
-import com.gamejigi.wiki.domain.board.Board;
-import com.gamejigi.wiki.domain.category.Category;
-import com.gamejigi.wiki.domain.member.Member;
-import com.gamejigi.wiki.repository.member.MemberRepository;
+import com.gamejigi.wiki.config.auth.dto.CustomUserDetails;
 import com.gamejigi.wiki.service.board.BoardService;
 import com.gamejigi.wiki.service.category.CategoryService;
 import com.gamejigi.wiki.service.member.MemberService;
 import com.gamejigi.wiki.util.PaginationRequest;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,13 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @Controller
 @RequestMapping("admin/board")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class BoardController {
-
     public final BoardService boardService;
     public final CategoryService categoryService;
     public final MemberService memberService;
@@ -46,7 +40,6 @@ public class BoardController {
             @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn,
             @RequestParam(required = false, defaultValue = "10") int size
     ) {
-
         var request = PaginationRequest.builder()
                 .page(page)
                 .maxSize(size)
@@ -110,10 +103,10 @@ public class BoardController {
     @ResponseBody
     public String boardCreate(
             @RequestParam String name,
-            @RequestParam(name = "category") long categoryId
+            @RequestParam(name = "category") long categoryId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        //추후에 계정ID를 세션에서 가져오는 코드 필요
-        long suId = memberService.getByName("admin").getId();
+        long suId = userDetails.getMember().getId();
 
         boardService.createBoard(name, categoryId, suId);
 
@@ -149,10 +142,10 @@ public class BoardController {
     public String boardPatch(
             @RequestParam long id,
             @RequestParam String name,
-            @RequestParam(name = "category") long categoryId
+            @RequestParam(name = "category") long categoryId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        //추후에 계정ID를 세션에서 가져오는 코드 필요
-        long suId = memberService.getByName("admin").getId();
+        long suId = userDetails.getMember().getId();
 
         boardService.patch(id, suId, name, categoryId);
 
