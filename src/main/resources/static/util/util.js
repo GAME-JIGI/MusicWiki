@@ -47,7 +47,8 @@ function moveParam(url, param) {
   location.href = url + "?" + param;
 }
 
-//쿼리 파라미터를 수정하기 //value 가 빈 문자열이면 삭제함
+//쿼리 파라미터를 수정하기
+// value 가 빈 문자열이면 삭제함
 function editParam(param, key, value) {
   param += "";
   key += "";
@@ -55,6 +56,9 @@ function editParam(param, key, value) {
 
   let paramJSON = QueryStringToJSON(param);
   paramJSON[key] = value;
+  if (value === "") {
+    delete param[key];
+  }
   return JSONToQueryString(paramJSON);
 }
 
@@ -72,7 +76,7 @@ function getValue(elementId) {
 }
 
 //쿼리 스트링 -> json
-//출처 :
+//출처 : https://m.blog.naver.com/yongyos/221771321572
 function QueryStringToJSON(str) {
   let pairs = str.split('&');
   let result = {};
