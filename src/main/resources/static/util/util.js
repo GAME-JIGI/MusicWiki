@@ -53,27 +53,9 @@ function editParam(param, key, value) {
   key += "";
   value += "";
 
-  const isValueEmpty = value === "";
-  const pair = isValueEmpty ? "" : `${key}=${value}`;
-  const ampersand = isValueEmpty ? "" : "&";
-
-  const isEmpty = param.indexOf('=') === -1;
-  if (isEmpty) {
-    return pair;
-  }
-
-  const oldStartIndex = param.indexOf(key + '=');
-  const isNew = oldStartIndex === -1;
-  if (isNew) {
-    return `${param}${ampersand}${pair}`;
-  }
-
-  let oldLastIndex = param.slice(oldStartIndex).indexOf('&');
-  oldLastIndex = oldLastIndex === -1 ? param.length - 1 : oldLastIndex - 1;
-
-  const oldLeftStr = param.slice(0, Math.max(0, oldStartIndex - 1));
-  const oldRightStr = param.slice(oldLastIndex + 1);
-  return `${oldLeftStr}${oldRightStr}${ampersand}${pair}`;
+  let paramJSON = QueryStringToJSON(param);
+  paramJSON[key] = value;
+  return JSONToQueryString(paramJSON);
 }
 
 //목록 정렬 관련 쿼리 파라미터를 수정하기
@@ -87,4 +69,34 @@ function editParamSort(param, sort, col) {
 //id를 받아서 해당 요소의 값를 가져옴
 function getValue(elementId) {
   return document.getElementById(elementId).value
+}
+
+//쿼리 스트링 -> json
+//출처 :
+function QueryStringToJSON(str) {
+  let pairs = str.split('&');
+  let result = {};
+  pairs.forEach(function (pair) {
+    pair = pair.split('=');
+    let name = pair[0]
+    let value = pair[1]
+    if (name.length)
+      if (result[name] !== undefined) {
+        if (!result[name].push) {
+          result[name] = [result[name]];
+        }
+        result[name].push(value || '');
+      } else {
+        result[name] = value || '';
+      }
+  });
+  return (result);
+}
+
+//json -> 쿼리 스트링
+function JSONToQueryString(json) {
+  const keyValueList = Object.entries(json);
+  const pairList = keyValueList.map(([key, value]) => `${key}=${value}`);
+  const queryString = pairList.join('&');
+  return queryString;
 }
