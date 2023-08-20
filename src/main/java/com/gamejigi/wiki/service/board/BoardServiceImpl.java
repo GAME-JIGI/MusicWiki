@@ -127,17 +127,14 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void patch(long id, long suId, String name, long categoryId) {
-        BoardEntity oldBoard = boardRepository.findById(id).orElse(null);
         CategoryEntity newCategory = categoryRepository.findById(categoryId).orElse(null);
         MemberEntity newSu = memberRepository.findById(suId).orElse(null);
 
-        BoardEntity newBoard = BoardEntity.builder()
-                .id(id)
-                .name(name)
-                .category(newCategory)
-                .su(newSu)
-                .build();
-
-        boardRepository.save(newBoard);
+        boardRepository
+                .findById(id)
+                .map((oldBoard) -> {
+                    oldBoard.patch(name, newSu, newCategory);
+                    return boardRepository.save(oldBoard);
+                });
     }
 }

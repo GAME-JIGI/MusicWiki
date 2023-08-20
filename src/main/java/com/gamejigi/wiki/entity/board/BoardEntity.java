@@ -49,4 +49,10 @@ public class BoardEntity extends BaseTimeEntity {
     }
 
     public void addPostList(PostEntity post) { postList.add(post); }
+
+    public void patch(String name, MemberEntity newSu, CategoryEntity newCategory) {
+        this.name = name;
+        su = newSu;
+        category = newCategory;
+    }
 }
