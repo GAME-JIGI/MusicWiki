@@ -2,6 +2,8 @@ package com.gamejigi.wiki.domain.member.role;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Getter
 @RequiredArgsConstructor
@@ -11,4 +13,8 @@ public enum Role {
 
     private final String key;
     private final String title;
+
+    public GrantedAuthority getGrantedAuthority() {
+        return new SimpleGrantedAuthority(key);
+    }
 }

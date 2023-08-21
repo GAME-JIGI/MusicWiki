@@ -3,6 +3,7 @@ package com.gamejigi.wiki.domain.member;
 import com.gamejigi.wiki.domain.member.role.Role;
 import com.gamejigi.wiki.entity.member.MemberEntity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Builder
-public class Member {
+public class Member implements Serializable {
     Long id;
     String user_id;
     String pw;
