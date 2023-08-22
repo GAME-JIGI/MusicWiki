@@ -33,9 +33,11 @@ public class MemberServiceImpl implements MemberService {
 
         Page<MemberEntity> result;
         if (searchStr.compareTo("%%") == 0) {
-            result = memberRepository.findAll(pageable);
+            result = memberRepository.findByUserIdIsNotNull(pageable);
+            //result = memberRepository.findAll(pageable);
         } else {
-            result = memberRepository.findPageByNameLike(searchStr, pageable);
+            result = memberRepository.findPageByNameLikeAndUserIdNotNull(searchStr, pageable);
+            //result = memberRepository.findPageByNameLike(searchStr, pageable);
         }
         return PaginationResponse.<Member>builder()
                 .request(request)
@@ -60,6 +62,8 @@ public class MemberServiceImpl implements MemberService {
                             .gender(true)
                             .userId("admin")
                             .pw(passwordEncoder.encode("admin"))
+                            .locked(false)
+                            .lockedDate(null)
                             .build();
                     return memberRepository.save(member);
                 });
@@ -77,6 +81,8 @@ public class MemberServiceImpl implements MemberService {
                     .name("member" + i)
                     .birth(birth)
                     .gender(true)
+                    .locked(false)
+                    .lockedDate(null)
                     .role(Role.USER)
                     .build();
             memberRepository.save(member);
@@ -123,7 +129,26 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void delete(long id) {
-        memberRepository.deleteById(id);
+        MemberEntity oldMember = memberRepository.findById(id).orElse(null);
+
+        if (oldMember == null) {
+            return;
+        }
+        // 입력된 정보로 기존 회원 정보를 수정
+        oldMember.setUserId(null);
+        oldMember.setPw(null);
+        oldMember.setPhone(null);
+        oldMember.setEmail(null);
+        oldMember.setName(null);
+        oldMember.setBirth(null);
+        oldMember.setGender(null);
+        oldMember.setRole(null);
+        oldMember.setLocked(null);
+
+        // 수정된 회원 정보를 데이터베이스에 저장
+        memberRepository.save(oldMember);
+
+       // memberRepository.deleteById(id);
     }
 
     @Override

@@ -117,8 +117,11 @@ public class MemberController {
     @DeleteMapping("")
     @ResponseBody
     public String memberCreate(
+            Model model,
             @RequestParam long id
     ) {
+        var member = memberService.getById(id);
+        model.addAttribute("member", member);
         memberService.delete(id);
 
         return "";

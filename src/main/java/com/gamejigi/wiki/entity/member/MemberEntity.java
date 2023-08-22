@@ -34,10 +34,10 @@ public class MemberEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String userId;
 
-    @Column(nullable = false)
+    @Column
     private String pw;
 
     @Column(length = 15, unique = true)
@@ -46,17 +46,23 @@ public class MemberEntity extends BaseTimeEntity {
     @Column(length = 100, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String name;
 
     @Column
     private LocalDate birth;
 
-    @Column(nullable = false)
+    @Column
     private Boolean gender;
 
+    @Column
+    private Boolean locked;
+
+    @Column
+    private LocalDate lockedDate;
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private Role role;
 
     @OneToMany(mappedBy = "su")
@@ -72,7 +78,7 @@ public class MemberEntity extends BaseTimeEntity {
     private List<LikeEntity> likeList;
 
     @Builder
-    public MemberEntity(String userId, String pw, String phone, String email, String name, LocalDate birth, Boolean gender, Role role) {
+    public MemberEntity(String userId, String pw, String phone, String email, String name, LocalDate birth, Boolean gender, Boolean locked, LocalDate lockedDate, Role role) {
         this.userId = userId;
         this.pw = pw;
         this.phone = phone;
@@ -80,6 +86,8 @@ public class MemberEntity extends BaseTimeEntity {
         this.name = name;
         this.birth = birth;
         this.gender = gender;
+        this.locked = locked;
+        this.lockedDate = lockedDate;
         this.role = role;
     }
 
