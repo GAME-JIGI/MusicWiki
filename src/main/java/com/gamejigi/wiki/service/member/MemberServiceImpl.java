@@ -122,6 +122,7 @@ public class MemberServiceImpl implements MemberService {
                 .birth(birth)
                 .gender(gender)
                 .role(role)
+                .locked(false)
                 .build();
 
         memberRepository.save(member);
@@ -153,7 +154,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void patch(long id, String user_id, String pw, String phone,
-                      String email, String name, LocalDate birth, Boolean gender, Role role) {
+                      String email, String name, LocalDate birth, Boolean gender, Role role, Boolean locked, LocalDate lockedDate) {
 
         MemberEntity oldMember = memberRepository.findById(id).orElse(null);
         System.out.println(oldMember);
@@ -173,6 +174,8 @@ public class MemberServiceImpl implements MemberService {
         oldMember.setBirth(birth);
         oldMember.setGender(gender);
         oldMember.setRole(role);
+        oldMember.setLocked(locked);
+        oldMember.setLockedDate(lockedDate);
 
         // 수정된 회원 정보를 데이터베이스에 저장
         memberRepository.save(oldMember);
