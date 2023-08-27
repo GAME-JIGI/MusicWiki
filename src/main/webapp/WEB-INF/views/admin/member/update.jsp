@@ -156,7 +156,7 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     회원 생년월일</div>
-                                                <input name="birth" type="text" class="form-control" value="${member.birth}" aria-label="">
+                                                <input name="birth" type="date" class="form-control" value="${member.birth}" aria-label="">
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -222,6 +222,36 @@
                                 </div>
                             </div>
 
+                            <!-- 회원 정지 유무-->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    회원 정지유무</div>
+                                                <b>정지 유무 <br> </b>
+                                                <c:choose>
+                                                    <c:when test="${member.locked == true}">
+                                                        <input name="locked" type="radio" value="false" class="" aria-label=""> 활동 <br>
+                                                        <input name="locked" type="radio" value="true" class="" aria-label="" checked> 일시 정지 <br>
+                                                        <input name="lockedDate" type="date" class="" value="${member.lockedDate}" aria-label=""> <b>까지</b>
+                                                    </c:when>
+                                                    <c:when test="${member.locked == false}">
+                                                        <input name="locked" type="radio" value="false" class="" aria-label="" checked> 활동 <br>
+                                                        <input name="locked" type="radio" value="true" class="" aria-label=""> 일시 정지 <br>
+                                                        <input name="lockedDate" type="date" class="" value="${member.lockedDate}" aria-label=""> <b>까지</b>
+                                                    </c:when>
+                                                </c:choose>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         <!-- 수정 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -244,7 +274,7 @@
                             </div>
                         </div>
 
-                    </div>
+<%--                    </div>--%>
 
                 </div>
                 <!-- /.container-fluid -->

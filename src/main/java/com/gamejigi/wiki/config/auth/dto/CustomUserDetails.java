@@ -3,6 +3,7 @@ package com.gamejigi.wiki.config.auth.dto;
 
 import com.gamejigi.wiki.domain.member.Member;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +79,20 @@ public class CustomUserDetails extends User implements OAuth2User, Serializable 
 
     @Override
     public boolean isEnabled() {
-        return true;
+        if (member.getLocked()) { // locked 컬럼이 true인 경우
+            LocalDate lockedDate = member.getLockedDate();
+            if (lockedDate != null && lockedDate.isAfter(LocalDate.now())) {
+                // lockedDate가 현재 날짜보다 이후인 경우 계정을 비활성화 상태로 유지
+                return false;
+            } else {
+                // lockedDate가 null이거나 현재 날짜 이전인 경우 계정을 활성화
+                return true;
+            }
+        }
+        else {
+            // locked 컬럼이 false인 경우 계정을 활성화
+            return true;
+        }
     }
 
     @Override

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.lang.model.SourceVersion;
 import java.beans.Encoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -117,8 +118,11 @@ public class MemberController {
     @DeleteMapping("")
     @ResponseBody
     public String memberCreate(
+            Model model,
             @RequestParam long id
     ) {
+        var member = memberService.getById(id);
+        model.addAttribute("member", member);
         memberService.delete(id);
 
         return "";
@@ -146,18 +150,38 @@ public class MemberController {
             @RequestParam String email,
             @RequestParam LocalDate birth,
             @RequestParam Boolean gender,
-            @RequestParam Role role
+            @RequestParam Role role,
+            @RequestParam Boolean locked,
+            @RequestParam(required = false) LocalDate lockedDate
     ) {
         var member = memberService.getById(id);
         model.addAttribute("member", member);
         String password;
-        if(pw == null) {
+        Boolean resultDate;
+        LocalDate currentDate = LocalDate.now();
+
+        if(lockedDate != null){
+            resultDate = lockedDate.isAfter(currentDate);
+        }
+        else resultDate = false;
+        
+        if(pw == null) { //비밀번호를 고치지 않았다면 기존 비밀번호를 다시 저장
            password = member.getPw();
         }
         else{
             password = pw;
         }
-        memberService.patch(id, user_id, password, phone, email, name, birth, gender, role);
+        
+        if(!locked && lockedDate != null){ //활동을 선택했는데 날짜를 입력한 경우 무효화
+            lockedDate = null;
+        }
+
+        if(!resultDate){ //정지 날짜가 현재 날짜보다 이전인 경우 무효
+            locked = false;
+            lockedDate = null;
+        }
+
+        memberService.patch(id, user_id, password, phone, email, name, birth, gender, role, locked, lockedDate);
 
         return "";
     }

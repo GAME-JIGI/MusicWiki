@@ -24,6 +24,8 @@ public class Member implements Serializable {
     String name;
     LocalDate birth;
     Boolean gender;
+    Boolean locked;
+    LocalDate lockedDate;
     Role role;
     LocalDateTime createdDate;
     LocalDateTime modifiedDate;
@@ -37,6 +39,8 @@ public class Member implements Serializable {
         name = memberEntity.getName();
         birth = memberEntity.getBirth();
         gender = memberEntity.getGender();
+        locked = memberEntity.getLocked();
+        lockedDate = memberEntity.getLockedDate();
         role = memberEntity.getRole();
         createdDate = memberEntity.getCreatedDate();
         modifiedDate = memberEntity.getModifiedDate();

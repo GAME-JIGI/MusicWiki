@@ -214,6 +214,33 @@
                             </div>
                         </div>
 
+                        <!--회원 정지 유무-->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">회원 정지 유무
+                                            </div>
+                                            <c:choose>
+                                                <c:when test="${member.locked == true && member.lockedDate != null}">
+                                                    <b> 정지 계정 </b> <br>
+                                                    <b> 기간: ${member.lockedDate} 까지</b>
+                                                </c:when>
+                                                <c:when test="${member.locked == false}">
+                                                    <b> 활동 가능 계정 </b>
+                                                </c:when>
+                                            </c:choose>
+                                            <%--                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${member.role}</div>--%>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- 생성/수정일시 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
