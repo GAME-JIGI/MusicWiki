@@ -135,17 +135,6 @@ public class DocumentServiceImpl implements DocumentService {
             document.setText(text);
             document.setModifyingCount(document.getModifyingCount()+1);
 
-
-        /*
-                .builder()
-                .id(id)
-                .name(name)
-                .text(text)
-                .su(newSu)
-                .build();
-
-         */
-
         documentRepository.save(document);
     }
 }

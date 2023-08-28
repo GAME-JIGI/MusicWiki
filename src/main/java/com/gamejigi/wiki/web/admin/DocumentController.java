@@ -1,9 +1,10 @@
 package com.gamejigi.wiki.web.admin;
 
 
-import com.gamejigi.wiki.service.board.BoardService;
+
 import com.gamejigi.wiki.service.document.DocumentService;
-import com.gamejigi.wiki.service.category.CategoryService;
+
+import jakarta.servlet.http.HttpServletRequest;
 import com.gamejigi.wiki.service.member.MemberService;
 import com.gamejigi.wiki.util.PaginationRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,23 +16,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("admin/document")
 @RequiredArgsConstructor
 public class DocumentController {
-
-    public final BoardService boardService;
-    public final CategoryService categoryService;
     public final MemberService memberService;
     public final DocumentService documentService;
 
     @GetMapping("")
     public String documentList(
             Model model,
+            HttpServletRequest httpServletRequest,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "") String search,
             @RequestParam(required = false, defaultValue = "", name = "type") String searchType,
             @RequestParam(required = false, defaultValue = "0") int sort,
-            @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn
+            @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn,
+            @RequestParam(required = false, defaultValue = "10") int size
     ) {
-
-
         var request = PaginationRequest.builder()
                 .page(page)
                 .search(search)
@@ -40,31 +38,18 @@ public class DocumentController {
                 .sortColumn(sortColumn)
                 .build();
 
-
-        var pagination = documentService.getDocumentList(request);//============
+        var pagination = documentService.getDocumentList(request);
 
         model.addAttribute("pagination", pagination);
+
+        String parameter = httpServletRequest.getQueryString();
+        parameter = parameter == null ? "" : parameter;
+
+        model.addAttribute("parameter", parameter);
 
         return "admin/document/list";
     }
 
-    @PostMapping("/test")
-    @ResponseBody
-    public String documentTestCreate() {
-
-        boardService.createTestcase(); ////
-
-        return "";
-    }
-
-    @DeleteMapping("/test")
-    @ResponseBody
-    public String documentTestDelete() {
-
-        boardService.deleteTestcase(); //
-
-        return "";
-    }
 
     @GetMapping("/detail")
     public String documentDetail(
