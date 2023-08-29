@@ -1,6 +1,7 @@
 <%@ page import="com.gamejigi.wiki.util.PaginationResponse" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id="pagination" scope="request" type="com.gamejigi.wiki.util.PaginationResponse<com.gamejigi.wiki.domain.document.Document>"/>
 
 <!DOCTYPE html>
@@ -78,22 +79,39 @@
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
-                                        <div class="dataTables_length"><label>줄 수 <select name="length"
-                                                                                          class="custom-select custom-select-sm form-control form-control-sm">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select></label></div>
+                                        <div class="dataTables_length">
+                                            <label>
+                                                줄 수
+                                                <select name="length" class="custom-select custom-select-sm form-control form-control-sm">
+                                                    <option value="10" >10</option>
+                                                    <option value="25" >25</option>
+                                                    <option value="50" >50</option>
+                                                    <option value="100" >100</option>
+                                                </select>
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <div class="dataTables_filter">
-                                            <label>검색 :
-                                                <input type="search" class="form-control form-control-sm" placeholder="">
+                                            <label>문서 이름 검색 :
+                                                <input type="search" id="document_search"class="form-control form-control-sm" placeholder=""
+                                                       value="${param['search']}"
+                                                       onchange="moveParam('/admin/document', editParam('${parameter}', 'search', getValue('document_search')))">
                                             </label>
                                         </div>
                                     </div>
                                 </div>
+                                <c:set var="sort_col" value="${pagination.request.sortColumn}" />
+                                <c:set var="sort_order" value="${pagination.request.sort}"/>
+
+                                <c:set var="arrow_images_str" value="sorting,sorting_asc,sorting_desc"/>
+                                <c:set var="arrow_images" value="${fn:split(arrow_images_str, ',')}"/>
+
+                                <c:set var="cols_str" value="id,name,su.name,createdDate,modifiedDate"/>
+                                <c:set var="cols" value="${fn:split(cols_str, ',')}"/>
+
+                                <c:set var="contents_str" value="번호, 문서 이름, 작성자 이름, 생성 일시, 수정 일시"/>
+                                <c:set var="contents" value="${fn:split(contents_str, ',')}"/>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <table class="table table-bordered dataTable" width="100%"
@@ -101,16 +119,17 @@
                                                style="width: 100%;">
                                             <thead>
                                             <tr role="row">
-                                                <th class="sorting sorting_asc" tabindex="0">번호
-                                                </th>
-                                                <th class="sorting" tabindex="0">문서 이름
-                                                </th>
-                                                <th class="sorting" tabindex="0">작성자 이름
-                                                </th>
-                                                <th class="sorting" tabindex="0">작성 일시
-                                                </th>
-                                                <th class="sorting" tabindex="0">수정 일시
-                                                </th>
+                                                <c:forEach var="col" items="${cols}" varStatus="status">
+                                                    <c:set var="is_sort_col" value="${sort_col == col}"/>
+                                                    <c:set var="content" value="${contents[status.index]}"/>
+
+                                                    <c:set var="next_order" value="${is_sort_col ? (sort_order == 2 ? 1 : 2) : 1}"/>
+                                                    <c:set var="arrow_image" value="${is_sort_col ? arrow_images[sort_order] : ''}"/>
+                                                    <th id="board_column_${col}" class="sorting ${arrow_image}" tabindex="0"
+                                                        onclick="moveParam('/admin/document', editParamSort('${parameter}', '${next_order}', '${col}'));">
+                                                            ${content}
+                                                    </th>
+                                                </c:forEach>
                                                 <th>상세 보기
                                                 </th>
                                             </tr>
