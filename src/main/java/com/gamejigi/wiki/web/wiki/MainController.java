@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("wiki")
 public class MainController {
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping("")
     public String mainPage() {
         return "wiki/main";
     }
