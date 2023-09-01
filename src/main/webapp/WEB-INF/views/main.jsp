@@ -27,6 +27,9 @@
                             <a class="nav-link active" aria-current="page" href="/admin">관리자 페이지 바로가기</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/wiki">위키 메인 페이지 바로가기</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/login">로그인</a>
                         </li>
                         <li class="nav-item">
