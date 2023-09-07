@@ -2,6 +2,7 @@ package com.gamejigi.wiki.entity.boardAnnounce;
 
 import com.gamejigi.wiki.entity.BaseTimeEntity;
 import com.gamejigi.wiki.entity.board.BoardEntity;
+import com.gamejigi.wiki.entity.category.CategoryEntity;
 import com.gamejigi.wiki.entity.member.MemberEntity;
 import com.gamejigi.wiki.entity.post.PostEntity;
 import jakarta.persistence.*;
@@ -36,5 +37,10 @@ public class BoardAnnounceEntity extends BaseTimeEntity {
         this.title = title;
         this.board = board;
         this.su = su;
+    }
+    public void patch(String name, MemberEntity newSu, BoardEntity newBoard) {
+        this.title = name;
+        su = newSu;
+        board = newBoard;
     }
 }

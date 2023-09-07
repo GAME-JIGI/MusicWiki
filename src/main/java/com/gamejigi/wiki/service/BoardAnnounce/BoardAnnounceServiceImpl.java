@@ -153,19 +153,31 @@ public class BoardAnnounceServiceImpl implements BoardAnnounceService {
         boardAnnounceRepository.deleteById(id);
     }
 
+//    @Override
+//    public void patch(long id, long suId, String title, long boardId) {
+//        BoardAnnounceEntity oldBoardAnnounce = boardAnnounceRepository.findById(id).orElse(null);
+//        BoardEntity newBoard = boardRepository.findById(boardId).orElse(null);
+//        MemberEntity newSu = memberRepository.findById(suId).orElse(null);
+//
+//        BoardAnnounceEntity newBoardAnnounce = BoardAnnounceEntity.builder()
+//                .id(id)
+//                .title(title)
+//                .board(newBoard)
+//                .su(newSu)
+//                .build();
+//
+//        boardAnnounceRepository.save(newBoardAnnounce);
+//    }
     @Override
-    public void patch(long id, long suId, String title, long boardId) {
-        BoardAnnounceEntity oldBoardAnnounce = boardAnnounceRepository.findById(id).orElse(null);
+    public void patch(long id, long suId, String name, long boardId) {
         BoardEntity newBoard = boardRepository.findById(boardId).orElse(null);
         MemberEntity newSu = memberRepository.findById(suId).orElse(null);
 
-        BoardAnnounceEntity newBoardAnnounce = BoardAnnounceEntity.builder()
-                .id(id)
-                .title(title)
-                .board(newBoard)
-                .su(newSu)
-                .build();
-
-        boardAnnounceRepository.save(newBoardAnnounce);
+        boardAnnounceRepository
+                .findById(id)
+                .map((oldBoard) -> {
+                    oldBoard.patch(name, newSu, newBoard);
+                    return boardAnnounceRepository.save(oldBoard);
+                });
     }
 }
