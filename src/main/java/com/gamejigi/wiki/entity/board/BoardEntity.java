@@ -40,6 +40,7 @@ public class BoardEntity extends BaseTimeEntity {
     @OneToMany(mappedBy = "board")
     private List<PostEntity> postList;
 
+
     @Builder
     public BoardEntity(Long id, String name, CategoryEntity category, MemberEntity su) {
         this.id = id;

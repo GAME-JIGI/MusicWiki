@@ -1,11 +1,15 @@
 package com.gamejigi.wiki.service.board;
 
 import com.gamejigi.wiki.domain.board.Board;
+import com.gamejigi.wiki.domain.category.Category;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
 
+import java.util.List;
+
 public interface BoardService {
 
+    List<Board> getBoardList();
     PaginationResponse<Board> getBoardList(PaginationRequest request);
 
     void createTestcase();
