@@ -24,6 +24,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -56,7 +57,7 @@ public class MemberEntity extends BaseTimeEntity {
     private Boolean gender;
 
     @Column
-    private Boolean locked;
+    private  Boolean locked;
 
     @Column
     private LocalDate lockedDate;
@@ -86,7 +87,7 @@ public class MemberEntity extends BaseTimeEntity {
         this.name = name;
         this.birth = birth;
         this.gender = gender;
-        this.locked = locked;
+        this.locked = locked == null ? false : locked;
         this.lockedDate = lockedDate;
         this.role = role;
     }
