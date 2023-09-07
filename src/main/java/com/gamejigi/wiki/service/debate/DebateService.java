@@ -18,10 +18,10 @@ public interface DebateService {
 
     Debate getDebateById(long id);
 
-    void createDebate(String name,long documentId, long suId);
+    void createDebate(String name,long documentId, long suId, Integer commentAble);
 
     void delete(long id);
 
-    void patch(long id, long suId, String name, long documentId);
+    void patch(long id, long suId, String name, long documentId, Integer commentAble);
 
 }

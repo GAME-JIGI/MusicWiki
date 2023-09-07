@@ -122,10 +122,10 @@
                                 <c:set var="arrow_images_str" value="sorting,sorting_asc,sorting_desc"/>
                                 <c:set var="arrow_images" value="${fn:split(arrow_images_str, ',')}"/>
 
-                                <c:set var="cols_str" value="id,name,document.name,su.name,createdDate,modifiedDate"/>
+                                <c:set var="cols_str" value="id,name,document.name,su.name,commentAble,createdDate,modifiedDate"/>
                                 <c:set var="cols" value="${fn:split(cols_str, ',')}"/>
 
-                                <c:set var="contents_str" value="번호,토론 이름,문서,작업자 이름,생성 일시,수정 일시"/>
+                                <c:set var="contents_str" value="번호,토론 이름,문서,작업자 이름,댓글 상태,생성 일시,수정 일시"/>
                                 <c:set var="contents" value="${fn:split(contents_str, ',')}"/>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -155,6 +155,7 @@
                                                 <th rowspan="1" colspan="1">토론 이름</th>
                                                 <th rowspan="1" colspan="1">문서</th>
                                                 <th rowspan="1" colspan="1">작업자 이름</th>
+                                                <th rowspan="1" colspan="1">댓글 상태</th>
                                                 <th rowspan="1" colspan="1">생성 일시</th>
                                                 <th rowspan="1" colspan="1">수정 일시</th>
                                                 <th rowspan="1" colspan="1">상세 보기</th>
@@ -175,6 +176,22 @@
                                                     </td>
                                                     <td>
                                                             ${row.su.name}
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${row.commentAble == 0}">
+                                                                열린 토론
+                                                            </c:when>
+                                                            <c:when test="${row.commentAble == 1}">
+                                                                닫힌 토론
+                                                            </c:when>
+                                                            <c:when test="${row.commentAble == 2}">
+                                                                멈춘 토론
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                알 수 없음
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                     <td>
                                                             ${row.createdDate}

@@ -98,6 +98,7 @@ public class DebateServiceImpl implements DebateService {
                     .document(document1)
                     .su(su)
                     .name("debate"+i)
+                    .commentAble(0)
                     .build();
             debateRepository.save(debate);
         }
@@ -116,7 +117,7 @@ public class DebateServiceImpl implements DebateService {
     }
 
     @Override
-    public void createDebate(String name, long documentId, long suId) {
+    public void createDebate(String name, long documentId, long suId, Integer commentAble) {
 
         MemberEntity su = memberRepository
                 .findById(suId)
@@ -131,6 +132,7 @@ public class DebateServiceImpl implements DebateService {
                 .su(su)
                 .name(name)
                 .document(document)
+                .commentAble(commentAble)
                 .build();
 
         debateRepository.save(debate);
@@ -142,7 +144,7 @@ public class DebateServiceImpl implements DebateService {
     }
 
     @Override
-    public void patch(long id, long suId, String name, long documentId) {
+    public void patch(long id, long suId, String name, long documentId, Integer commentAble) {
         DebateEntity oldDebate = debateRepository.findById(id).orElse(null);
         DocumentEntity newDocument = documentRepository.findById(documentId).orElse(null);
         MemberEntity newSu = memberRepository.findById(suId).orElse(null);
@@ -152,6 +154,7 @@ public class DebateServiceImpl implements DebateService {
                 .name(name)
                 .document(newDocument)
                 .su(newSu)
+                .commentAble(commentAble)
                 .build();
 
         debateRepository.save(newDebate);

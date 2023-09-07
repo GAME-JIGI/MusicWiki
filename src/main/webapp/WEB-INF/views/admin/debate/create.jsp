@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        <!-- 카테고리 이름 -->
+                        <!-- 문서 이름 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
@@ -85,6 +85,28 @@
                                                 <c:forEach var="document" items="${documents}">
                                                     <option value="${document.id}">${document.name}</option>
                                                 </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-tag fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 댓글 상태 -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                댓글 상태</div>
+                                            <select name="commentAble" class="form-select" aria-label="">
+                                                <option value=0>열린 토론</option>
+                                                <option value=1>닫힌 토론</option>
+                                                <option value=2>멈춘 토론</option>
                                             </select>
                                         </div>
                                         <div class="col-auto">

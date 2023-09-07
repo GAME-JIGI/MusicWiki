@@ -125,6 +125,36 @@
                         </div>
                     </div>
 
+                    <!-- 댓글상태 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">댓글 상태
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <%
+                                            String commentAble = String.valueOf(debate.getCommentAble());
+                                            if ("0".equals(commentAble)) { %>
+                                            열린 토론
+                                            <% } else if ("1".equals(commentAble)) { %>
+                                            닫힌 토론
+                                            <% } else if ("2".equals(commentAble)) { %>
+                                            멈춘 토론
+                                            <% } else { %>
+                                            알 수 없는 상태
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-user-circle fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- 생성/수정일시 -->
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-warning shadow h-100 py-2">

@@ -106,12 +106,13 @@ public class DebateController {
     @ResponseBody
     public String debateCreate(
             @RequestParam String name,
-            @RequestParam(name = "document") long documentId
+            @RequestParam(name = "document") long documentId,
+            @RequestParam Integer commentAble
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        debateService.createDebate(name, documentId, suId);
+        debateService.createDebate(name, documentId, suId, commentAble);
 
         return "";
     }
@@ -145,12 +146,13 @@ public class DebateController {
     public String debatePatch(
             @RequestParam long id,
             @RequestParam String name,
-            @RequestParam(name = "document") long documentId
+            @RequestParam(name = "document") long documentId,
+            @RequestParam Integer commentAble
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        debateService.patch(id, suId, name, documentId);
+        debateService.patch(id, suId, name, documentId, commentAble);
 
         return "";
     }

@@ -17,6 +17,7 @@ public class Debate {
 
     private Long id;
     private String name;
+    private Integer commentAble;
     private Document document;
     private Member su;
     LocalDateTime createdDate;
@@ -26,6 +27,7 @@ public class Debate {
     public Debate(DebateEntity entity) {
         id = entity.getId();
         name = entity.getName();
+        commentAble = entity.getCommentAble();
         document = new Document(entity.getDocument());
         su = new Member(entity.getSu());
         createdDate = entity.getCreatedDate();
