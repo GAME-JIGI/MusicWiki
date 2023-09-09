@@ -101,6 +101,7 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                             .su(su)
                             .document(document1)
                             .name("debate1")
+                            .commentAble(0)
                             .build();
                     return debateRepository.save(debate);
                 });
@@ -144,15 +145,19 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                 .findById(debateId)
                 .orElse(null);
 
-        DebateCommentEntity debateComment = DebateCommentEntity
-                .builder()
-                .writer(su)
-                .content(name)
-                .document(document)
-                .debate(debate)
-                .build();
+        Integer commentAble = debate.getCommentAble();
 
-        debateCommentRepository.save(debateComment);
+        if(commentAble == 0) {
+            DebateCommentEntity debateComment = DebateCommentEntity
+                    .builder()
+                    .writer(su)
+                    .content(name)
+                    .document(document)
+                    .debate(debate)
+                    .build();
+
+            debateCommentRepository.save(debateComment);
+        }
     }
 
     @Override
