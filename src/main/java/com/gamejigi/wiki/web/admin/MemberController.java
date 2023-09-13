@@ -5,6 +5,7 @@ import com.gamejigi.wiki.service.board.BoardService;
 import com.gamejigi.wiki.service.category.CategoryService;
 import com.gamejigi.wiki.util.PaginationRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import com.gamejigi.wiki.service.member.MemberService;
@@ -21,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequestMapping("admin/member")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class MemberController {
 
     public final MemberService memberService;
