@@ -98,9 +98,9 @@
                                                 검색 종류
                                                 <select name="type" id="debate_searchType" class="custom-select custom-select-sm form-control form-control-sm"
                                                         onchange="moveParam('/admin/debate', editParam('${parameter}', 'type', getValue('debate_searchType')));">
-                                                    <c:forEach var="row" items="${fn:split('name,document,su', ',')}">
-                                                        <option value="${row}" ${type == row ? "selected" : ""}>${row}</option>
-                                                    </c:forEach>
+                                                    <option value="name" ${type == "name" ? "selected" : ""}>토론 이름</option>
+                                                    <option value="document" ${type == "document" ? "selected" : ""}>문서 이름</option>
+                                                    <option value="su" ${type == "su" ? "selected" : ""}>작성자 이름</option>
                                                 </select>
                                             </label>
                                         </div>
@@ -108,7 +108,7 @@
                                     <div class="col-sm-12 col-md-4">
                                         <div class="dataTables_filter">
                                             <label>
-                                                토론 이름 검색 :
+                                                검색 :
                                                 <input type="search" id="debate_search" class="form-control form-control-sm" placeholder=""
                                                        value="${param['search']}"
                                                        onchange="moveParam('/admin/debate', editParam('${parameter}', 'search', getValue('debate_search')))">
@@ -122,10 +122,10 @@
                                 <c:set var="arrow_images_str" value="sorting,sorting_asc,sorting_desc"/>
                                 <c:set var="arrow_images" value="${fn:split(arrow_images_str, ',')}"/>
 
-                                <c:set var="cols_str" value="id,name,document.name,su.name,commentAble,createdDate,modifiedDate"/>
+                                <c:set var="cols_str" value="id,name,document.name,su.name,commentAble,lockTime,createdDate,modifiedDate"/>
                                 <c:set var="cols" value="${fn:split(cols_str, ',')}"/>
 
-                                <c:set var="contents_str" value="번호,토론 이름,문서,작업자 이름,댓글 상태,생성 일시,수정 일시"/>
+                                <c:set var="contents_str" value="번호,토론 이름,문서,작업자 이름,댓글 상태,잠금 시간,생성 일시,수정 일시"/>
                                 <c:set var="contents" value="${fn:split(contents_str, ',')}"/>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -156,6 +156,7 @@
                                                 <th rowspan="1" colspan="1">문서</th>
                                                 <th rowspan="1" colspan="1">작업자 이름</th>
                                                 <th rowspan="1" colspan="1">댓글 상태</th>
+                                                <th rowspan="1" colspan="1">잠금 시간</th>
                                                 <th rowspan="1" colspan="1">생성 일시</th>
                                                 <th rowspan="1" colspan="1">수정 일시</th>
                                                 <th rowspan="1" colspan="1">상세 보기</th>
@@ -192,6 +193,9 @@
                                                                 알 수 없음
                                                             </c:otherwise>
                                                         </c:choose>
+                                                    </td>
+                                                    <td>
+                                                            ${row.lockTime}
                                                     </td>
                                                     <td>
                                                             ${row.createdDate}

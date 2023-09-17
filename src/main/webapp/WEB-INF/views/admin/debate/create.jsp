@@ -103,11 +103,16 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 댓글 상태</div>
-                                            <select name="commentAble" class="form-select" aria-label="">
+                                            <select id="commentAble" name="commentAble" class="form-select" aria-label="">
                                                 <option value=0>열린 토론</option>
                                                 <option value=1>닫힌 토론</option>
                                                 <option value=2>멈춘 토론</option>
                                             </select>
+                                        </div>
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                잠금 시간</div>
+                                            <input id="lockTime" name="lockTime" type="datetime-local" class="form-control" aria-label="" readonly>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -205,6 +210,23 @@
 
 <!-- Custom scripts for all pages-->
 <script src="/admin/js/sb-admin-2.min.js"></script>
+
+<script>
+    // 댓글 상태 변경 시 이벤트 처리
+    document.getElementById('commentAble').addEventListener('change', function() {
+        var commentAbleValue = this.value;
+        var lockTimeInput = document.getElementById('lockTime');
+
+        // 댓글 상태가 2 (멈춘 토론)인 경우에만 잠금 시간 입력 필드를 읽기 전용으로 설정
+        if (commentAbleValue == 2) {
+            lockTimeInput.readOnly = false; // 읽기 전용 해제
+            lockTimeInput.value = ''; // 잠금 시간 입력값 초기화
+        } else {
+            lockTimeInput.readOnly = true; // 읽기 전용으로 설정
+            lockTimeInput.value = ''; // 잠금 시간 입력값 초기화
+        }
+    });
+</script>
 
 </body>
 

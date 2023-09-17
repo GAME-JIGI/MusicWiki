@@ -6,7 +6,7 @@ import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
 
 import java.util.List;
-
+import java.time.LocalDateTime;
 
 public interface DebateService {
 
@@ -18,10 +18,10 @@ public interface DebateService {
 
     Debate getDebateById(long id);
 
-    void createDebate(String name,long documentId, long suId, Integer commentAble);
+    void createDebate(String name,long documentId, long suId, Integer commentAble, LocalDateTime lockTime);
 
     void delete(long id);
 
-    void patch(long id, long suId, String name, long documentId, Integer commentAble);
+    void patch(long id, long suId, String name, long documentId, Integer commentAble, LocalDateTime lockTime);
 
 }

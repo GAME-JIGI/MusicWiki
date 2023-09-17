@@ -118,7 +118,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">관리자
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${debateComment.su.name}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${debateComment.writer.name}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-user-circle fa-2x text-gray-300"></i>

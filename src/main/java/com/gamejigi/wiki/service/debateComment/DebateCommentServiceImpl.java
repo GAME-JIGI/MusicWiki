@@ -102,6 +102,7 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                             .document(document1)
                             .name("debate1")
                             .commentAble(0)
+                            .lockTime(null)
                             .build();
                     return debateRepository.save(debate);
                 });

@@ -20,6 +20,7 @@ public class Debate {
     private Integer commentAble;
     private Document document;
     private Member su;
+    LocalDateTime lockTime;
     LocalDateTime createdDate;
     LocalDateTime modifiedDate;
 
@@ -30,6 +31,7 @@ public class Debate {
         commentAble = entity.getCommentAble();
         document = new Document(entity.getDocument());
         su = new Member(entity.getSu());
+        lockTime = entity.getLockTime();
         createdDate = entity.getCreatedDate();
         modifiedDate = entity.getModifiedDate();
     }

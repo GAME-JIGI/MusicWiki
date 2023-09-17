@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -26,6 +28,9 @@ public class DebateEntity extends BaseTimeEntity {
     @Column(nullable = false, length = 1)
     private Integer commentAble;
 
+    @Column
+    private LocalDateTime lockTime;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id")
     private DocumentEntity document;
@@ -37,11 +42,12 @@ public class DebateEntity extends BaseTimeEntity {
     @OneToMany(mappedBy = "debate")
     private List<DebateCommentEntity> debateCommentList;
     @Builder
-    public DebateEntity(Long id, String name, Integer commentAble,DocumentEntity document, MemberEntity su) {
+    public DebateEntity(Long id, String name, Integer commentAble,DocumentEntity document, MemberEntity su, LocalDateTime lockTime) {
         this.id = id;
         this.name = name;
         this.commentAble = commentAble;
         this.document = document;
+        this.lockTime = lockTime;
         this.su = su;
     }
 

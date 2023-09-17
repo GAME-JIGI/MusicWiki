@@ -7,6 +7,8 @@ import com.gamejigi.wiki.util.PaginationRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -39,7 +41,7 @@ public class DebateController {
             HttpServletRequest httpServletRequest,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required = false, defaultValue = "", name = "type") String searchType,
+            @RequestParam(required = false, defaultValue = "name", name = "type") String searchType,
             @RequestParam(required = false, defaultValue = "0") int sort,
             @RequestParam(required = false, defaultValue = "", name = "col") String sortColumn,
             @RequestParam(required = false, defaultValue = "10") int size
@@ -109,12 +111,13 @@ public class DebateController {
     public String debateCreate(
             @RequestParam String name,
             @RequestParam(name = "document") long documentId,
-            @RequestParam Integer commentAble
+            @RequestParam Integer commentAble,
+            @RequestParam LocalDateTime lockTime
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        debateService.createDebate(name, documentId, suId, commentAble);
+        debateService.createDebate(name, documentId, suId, commentAble, lockTime);
 
         return "";
     }
@@ -149,12 +152,13 @@ public class DebateController {
             @RequestParam long id,
             @RequestParam String name,
             @RequestParam(name = "document") long documentId,
-            @RequestParam Integer commentAble
+            @RequestParam Integer commentAble,
+            @RequestParam LocalDateTime lockTime
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
 
-        debateService.patch(id, suId, name, documentId, commentAble);
+        debateService.patch(id, suId, name, documentId, commentAble, lockTime);
 
         return "";
     }

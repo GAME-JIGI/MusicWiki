@@ -98,9 +98,10 @@
                                                 검색 종류
                                                 <select name="type" id="debateComment_searchType" class="custom-select custom-select-sm form-control form-control-sm"
                                                         onchange="moveParam('/admin/debateComment', editParam('${parameter}', 'type', getValue('debateComment_searchType')));">
-                                                    <c:forEach var="row" items="${fn:split('name,document,debate,writer', ',')}">
-                                                        <option value="${row}" ${type == row ? "selected" : ""}>${row}</option>
-                                                    </c:forEach>
+                                                    <option value="name" ${type == "name" ? "selected" : ""}>댓글 내용</option>
+                                                    <option value="document" ${type == "document" ? "selected" : ""}>문서 이름</option>
+                                                    <option value="debate" ${type == "debate" ? "selected" : ""}>토론 이름</option>
+                                                    <option value="writer" ${type == "writer" ? "selected" : ""}>작성자 이름</option>
                                                 </select>
                                             </label>
                                         </div>
@@ -178,7 +179,7 @@
                                                             ${row.debate.name}
                                                     </td>
                                                     <td>
-                                                            ${row.su.name}
+                                                            ${row.writer.name}
                                                     </td>
                                                     <td>
                                                             ${row.createdDate}

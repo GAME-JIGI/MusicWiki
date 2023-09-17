@@ -1,14 +1,13 @@
 package com.gamejigi.wiki.service.debate;
 
 
-import com.gamejigi.wiki.domain.category.Category;
 import com.gamejigi.wiki.domain.debate.Debate;
 import com.gamejigi.wiki.domain.member.role.Role;
-import com.gamejigi.wiki.entity.document.DocumentEntity;
 import com.gamejigi.wiki.entity.debate.DebateEntity;
+import com.gamejigi.wiki.entity.document.DocumentEntity;
 import com.gamejigi.wiki.entity.member.MemberEntity;
-import com.gamejigi.wiki.repository.document.DocumentRepository;
 import com.gamejigi.wiki.repository.debate.DebateRepository;
+import com.gamejigi.wiki.repository.document.DocumentRepository;
 import com.gamejigi.wiki.repository.member.MemberRepository;
 import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
@@ -16,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -99,6 +100,7 @@ public class DebateServiceImpl implements DebateService {
                     .su(su)
                     .name("debate"+i)
                     .commentAble(0)
+                    .lockTime(null)
                     .build();
             debateRepository.save(debate);
         }
@@ -117,7 +119,7 @@ public class DebateServiceImpl implements DebateService {
     }
 
     @Override
-    public void createDebate(String name, long documentId, long suId, Integer commentAble) {
+    public void createDebate(String name, long documentId, long suId, Integer commentAble, LocalDateTime lockTime) {
 
         MemberEntity su = memberRepository
                 .findById(suId)
@@ -133,6 +135,7 @@ public class DebateServiceImpl implements DebateService {
                 .name(name)
                 .document(document)
                 .commentAble(commentAble)
+                .lockTime(lockTime)
                 .build();
 
         debateRepository.save(debate);
@@ -144,7 +147,7 @@ public class DebateServiceImpl implements DebateService {
     }
 
     @Override
-    public void patch(long id, long suId, String name, long documentId, Integer commentAble) {
+    public void patch(long id, long suId, String name, long documentId, Integer commentAble, LocalDateTime lockTime) {
         DebateEntity oldDebate = debateRepository.findById(id).orElse(null);
         DocumentEntity newDocument = documentRepository.findById(documentId).orElse(null);
         MemberEntity newSu = memberRepository.findById(suId).orElse(null);
@@ -155,9 +158,29 @@ public class DebateServiceImpl implements DebateService {
                 .document(newDocument)
                 .su(newSu)
                 .commentAble(commentAble)
+                .lockTime(lockTime)
                 .build();
 
         debateRepository.save(newDebate);
+    }
+
+    // 10초마다 실행되는 스케줄링 메서드
+    @Scheduled(fixedRate = 10000) // 10초마다 실행
+    public void checkAndChangeDebateStatus() {
+
+        // 멈춘 토론 상태 확인 및 열린 토론으로 변경
+        List<DebateEntity> stoppedDebates = debateRepository.findStoppedDebates();
+        for (DebateEntity debate : stoppedDebates) {
+            DebateEntity newDebate = DebateEntity.builder()
+                    .id(debate.getId())
+                    .name(debate.getName())
+                    .document(debate.getDocument())
+                    .su(debate.getSu())
+                    .commentAble(0)
+                    .lockTime(null)
+                    .build();
+            debateRepository.save(newDebate);
+        }
     }
 
 }
