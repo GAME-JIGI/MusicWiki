@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -157,7 +158,9 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                     .debate(debate)
                     .build();
 
+            debate.updateModifiedDate();
             debateCommentRepository.save(debateComment);
+            debateRepository.save(debate);
         }
     }
 
@@ -173,6 +176,8 @@ public class DebateCommentServiceImpl implements DebateCommentService {
         DebateEntity newDebate = debateRepository.findById(debateId).orElse(null);
         MemberEntity newSu = memberRepository.findById(suId).orElse(null);
 
+
+
         DebateCommentEntity newDebateComment = DebateCommentEntity.builder()
                 .id(id)
                 .content(name)
@@ -180,8 +185,11 @@ public class DebateCommentServiceImpl implements DebateCommentService {
                 .debate(newDebate)
                 .writer(newSu)
                 .build();
+        if(newDebate==null) return;
+        newDebate.updateModifiedDate();
 
         debateCommentRepository.save(newDebateComment);
+        debateRepository.save(newDebate);
     }
 
 
