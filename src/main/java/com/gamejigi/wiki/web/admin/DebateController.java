@@ -112,7 +112,7 @@ public class DebateController {
             @RequestParam String name,
             @RequestParam(name = "document") long documentId,
             @RequestParam Integer commentAble,
-            @RequestParam LocalDateTime lockTime
+            @RequestParam(required = false) LocalDateTime lockTime
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
@@ -153,7 +153,7 @@ public class DebateController {
             @RequestParam String name,
             @RequestParam(name = "document") long documentId,
             @RequestParam Integer commentAble,
-            @RequestParam LocalDateTime lockTime
+            @RequestParam(required = false) LocalDateTime lockTime
     ) {
         //추후에 계정ID를 세션에서 가져오는 코드 필요
         long suId = memberService.getByName("admin").getId();
