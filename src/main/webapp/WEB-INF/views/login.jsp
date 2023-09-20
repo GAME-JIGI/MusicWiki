@@ -1,88 +1,81 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/login.css"/>
+    <style>
+        @import url(/css/login.css);
+    </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        // 카카오 SDK 초기화
+        Kakao.init('bbb959fac6c8fb113822ad5770dcdbaf');
 
-    <title>SB Admin 2 - Login</title>
+        // 카카오 소셜 로그인 함수
+        function loginWithKakao() {
+            Kakao.Auth.login({
+                success: function(authObj) {
+                    alert('로그인 성공\n사용자 아이디: ' + authObj.id);
+                },
+                fail: function(err) {
+                    alert('로그인 실패: ' + JSON.stringify(err));
+                }
+            });
+        }
+    </script>
+    <script>
+        // 네이버 소셜 로그인 함수
+        function loginWithNaver() {
+            // 네이버 로그인 URL을 생성합니다.
+            var redirectUri = encodeURIComponent('http://localhost:9000');
+            var clientId = 'pHC9jmMbF5xYg_EGa0tG';
+            var naverLoginUrl = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' + clientId + '&redirect_uri=' + redirectUri + '&state=STATE_STRING';
 
-    <!-- Custom fonts for this template-->
-    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
+            // 사용자를 네이버 로그인 페이지로 리다이렉트합니다.
+            window.location.href = naverLoginUrl;
+        }
+    </script>
+    <script>
+        // 구글 소셜 로그인 함수
+        function loginWithGoogle() {
+            // 구글 로그인 URL을 생성합니다.
+            var clientId = '11750994194-9qnff01gc21dt6jmkquuno50smpjckdn.apps.googleusercontent.com';
+            var redirectUri = 'http://localhost:9000';
+            var scope = 'profile email'; // 필요한 스코프 설정
+            var googleLoginUrl = 'https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=' + clientId + '&redirect_uri=' + encodeURIComponent(redirectUri) + '&scope=' + encodeURIComponent(scope);
 
-    <!-- Custom styles for this template-->
-    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
-
+            // 사용자를 구글 로그인 페이지로 리다이렉트합니다.
+            window.location.href = googleLoginUrl;
+        }
+    </script>
 </head>
 
-<body class="bg-gradient-primary">
-
-<div class="container">
-
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-
-        <div class="col-lg-6 col-md-8 col-sm-10">
-
-            <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                        </div>
-                        <form class="user" action="/login" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control form-control-user"
-                                       id="exampleInputEmail" aria-describedby="emailHelp"
-                                       placeholder="User Id" name="userId">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control form-control-user"
-                                       id="exampleInputPassword" placeholder="Password"
-                                       name="passWd">
-                            </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck">
-                                    <label class="custom-control-label" for="customCheck">Remember
-                                        Me</label>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-user btn-block">
-                                Login
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+<body>
+<div id="content">
+    <img class="logo" alt="logo" src="images/logo.png">
+    <form action="/login" method="post">
+        <input type="text" name="userId" class="login_input_text" placeholder="아이디" required><br>
+        <input type="password" name="passWd" class="login_input_text" placeholder="비밀번호" required><br>
+        <input type="submit" class="login_input_btn" value="Login">
+        <input type="button" class="login_input_google_btn" value="구글 로그인" onClick="location.href='javascript:loginWithGoogle()'">
+        <input type="button" class="login_input_naver_btn" value="네이버 로그인" onClick="location.href='javascript:loginWithNaver()'">
+        <input type="button" class="login_input_kakao_btn" value="카카오 로그인" onClick="location.href='javascript:loginWithKakao()'">
+    </form>
+    <div class="find_info"><br>
+        <a id="find_id" href="#">아이디 찾기</a><a> |</a>
+        <a id="find_password" href="#">비밀번호 찾기</a><a> |</a>
+        <a id="find_password" href="member">회원가입</a><a><br><br>
+        <a class="sub_font_style" href="#"><b style="color:#7b7b7b">개인정보처리방침</b></a><br>
+        <a class="question" href="#">회원 정보 문의: gamejigi.induk.ac.kr</a>
     </div>
-
+    <p id="copyright">Copyright © MusicWiki All Rights Reserved.</p>
 </div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="/admin/vendor/jquery/jquery.min.js"></script>
-<script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/admin/js/sb-admin-2.min.js"></script>
-
 </body>
 
 </html>

@@ -15,4 +15,9 @@ public class MainPageController {
         return "login";
     }
 
+    @GetMapping("/member")
+    public String member() {
+        return "member";
+    }
+
 }
