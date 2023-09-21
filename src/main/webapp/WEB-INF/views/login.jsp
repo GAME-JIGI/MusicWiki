@@ -58,7 +58,7 @@
 
 <body>
 <div id="content">
-    <img class="logo" alt="logo" src="images/logo.png">
+    <img class="logo" alt="logo" src="/music-wiki/img/logo.svg">
     <form action="/login" method="post">
         <input type="text" name="userId" class="login_input_text" placeholder="아이디" required><br>
         <input type="password" name="passWd" class="login_input_text" placeholder="비밀번호" required><br>
