@@ -104,3 +104,32 @@ function JSONToQueryString(json) {
   const queryString = pairList.join('&');
   return queryString;
 }
+
+function validateForm() {
+  var userEmail = document.forms["registrationForm"]["userEmail"].value;
+  var userBirthday = document.forms["registrationForm"]["userBirthday"].value;
+  var userPhone = document.forms["registrationForm"]["userPhone"].value;
+
+  // 이메일 유효성 검사
+  var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!emailPattern.test(userEmail)) {
+    alert("유효한 이메일 주소를 입력하세요.");
+    return false;
+  }
+
+  // 생년월일 유효성 검사
+  var birthdayPattern = /^\d{8}$/;
+  if (!birthdayPattern.test(userBirthday)) {
+    alert("생년월일은 8자리 숫자로 입력하세요.");
+    return false;
+  }
+
+  // 휴대전화번호 유효성 검사
+  var phonePattern = /^[0-9]{10}$/;
+  if (!phonePattern.test(userPhone)) {
+    alert("휴대전화번호는 10자리 숫자로 입력하세요.");
+    return false;
+  }
+
+  return true; // 모든 유효성 검사를 통과한 경우에만 제출을 허용
+}

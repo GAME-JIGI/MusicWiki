@@ -63,7 +63,7 @@ public class MemberEntity extends BaseTimeEntity {
     private LocalDate lockedDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+    @Column(length = 20, nullable = false)
     private Role role;
 
     @OneToMany(mappedBy = "su")

@@ -11,6 +11,7 @@ import com.gamejigi.wiki.util.PaginationRequest;
 import com.gamejigi.wiki.util.PaginationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
